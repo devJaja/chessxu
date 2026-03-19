@@ -1,0 +1,206 @@
+@import './constants.css';
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans&display=swap');
+
+html,body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+  background: var(--bg-color);
+  font-family: 'Sofia Sans', sans-serif;
+  grid-template-columns: auto 220px;
+  box-shadow: var(--app-shadow);
+  border-radius: 10px;
+  color: var(--text-color);
+  padding: 12px;
+}
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 16px;
+}
+
+/* Responsive container for small screens */
+@media (max-width: 1024px) {
+  .App { grid-template-columns: 1fr; }
+}
+
+.btn {
+  background: var(--primary-button-bg);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  margin: 0; /* Remove default button margins to rely on flex gap */
+  font-size: 1.1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, transform 0.05s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.btn:hover {
+  background-color: var(--primary-button-hover);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.35);
+  outline-offset: 2px;
+}
+
+.game-mode-selection {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  justify-content: center;
+  padding: 10px;
+  background-color: var(--game-selection-bg);
+  border-radius: 8px;
+}
+
+.game-mode-selection button {
+  padding: 10px 20px;
+  font-size: 1em;
+  margin: 0; /* Ensure game mode buttons don't have extra margin */
+  background-color: var(--secondary-button-bg);
+  color: var(--secondary-button-text);
+}
+
+.game-mode-selection button:disabled {
+  background-color: var(--disabled-button-bg);
+  color: var(--disabled-button-text);
+  cursor: not-allowed;
+}
+
+.game-mode-selection button:hover:not(:disabled) {
+  background-color: var(--secondary-button-bg-hover);
+} 
+
+.leaderboard {
+  background-color: var(--game-selection-bg);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 0; /* Remove top margin from leaderboard container */
+  width: 100%; /* Ensure it takes full width of its grid column */
+  max-width: 500px; /* Optional: limit max width for larger screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: var(--text-color);
+}
+
+.leaderboard h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.leaderboard th,
+.leaderboard td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #555;
+}
+
+.leaderboard th {
+  background-color: #333;
+  color: white;
+}
+
+.leaderboard tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard button,
+.leaderboard .btn {
+  display: block;
+  margin: 0 auto; /* Center the button */
+}
+
+/* Stake display styles */
+.stake-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  background: rgba(97, 175, 239, 0.08);
+  border: 1px solid rgba(97, 175, 239, 0.25);
+}
+
+.stake-display--empty {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.stake-empty-text {
+  color: var(--text-color);
+  font-size: 0.95em;
+}
+
+.stake-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #61afef 0%, #528cbb 100%);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(97, 175, 239, 0.35);
+}
+
+.stake-badge__label {
+  font-weight: 600;
+  opacity: 0.95;
+}
+
+.stake-badge__amount {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.stake-badge__status {
+  text-transform: capitalize;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+.stake-badge__status--active {
+  background: rgba(152, 195, 121, 0.25);
+  color: #d1ffd1;
+}
+
+.stake-badge__status--won {
+  background: rgba(152, 195, 121, 0.25);
+  color: #d1ffd1;
+}
+
+.stake-badge__status--lost {
+  background: rgba(224, 108, 117, 0.25);
+  color: #ffd6db;
+}
+
+.stake-badge__status--cancelled {
+  background: rgba(255, 255, 255, 0.2);
+  color: #eee;
+}
