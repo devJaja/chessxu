@@ -49,7 +49,7 @@
         (begin
             ;; Escrow wager
             (if (> wager u0)
-                (try! (stx-transfer? wager tx-sender (as-contract tx-sender)))
+                (try! (contract-call? .stackchess-token transfer wager tx-sender (as-contract tx-sender) none))
                 true
             )
             
@@ -87,7 +87,7 @@
             
             ;; P2 must match the wager
             (if (> wager u0)
-                (try! (stx-transfer? wager tx-sender (as-contract tx-sender)))
+                (try! (contract-call? .stackchess-token transfer wager tx-sender (as-contract tx-sender) none))
                 true
             )
             
@@ -148,14 +148,14 @@
             (if (is-eq tx-sender p1)
                 (begin ;; P1 resigned, P2 wins
                     (if (> prize u0)
-                        (try! (as-contract (stx-transfer? prize tx-sender p2)))
+                        (try! (as-contract (contract-call? .stackchess-token transfer prize tx-sender p2 none)))
                         true
                     )
                     (map-set games { game-id: game-id } (merge game { status: u3 }))
                 )
                 (begin ;; P2 resigned, P1 wins
                     (if (> prize u0)
-                        (try! (as-contract (stx-transfer? prize tx-sender p1)))
+                        (try! (as-contract (contract-call? .stackchess-token transfer prize tx-sender p1 none)))
                         true
                     )
                     (map-set games { game-id: game-id } (merge game { status: u2 }))
@@ -184,16 +184,16 @@
             
             (if (is-eq new-status u2)
                 ;; White wins
-                (if (> prize u0) (try! (as-contract (stx-transfer? prize tx-sender p1))) true)
+                (if (> prize u0) (try! (as-contract (contract-call? .stackchess-token transfer prize tx-sender p1 none))) true)
                 
                 (if (is-eq new-status u3)
                     ;; Black wins
-                    (match p2-opt p2 (if (> prize u0) (try! (as-contract (stx-transfer? prize tx-sender p2))) true) true)
+                    (match p2-opt p2 (if (> prize u0) (try! (as-contract (contract-call? .stackchess-token transfer prize tx-sender p2 none))) true) true)
                     
                     ;; Draw or Cancel - Refund wagers
                     (begin
-                        (if (> wager u0) (try! (as-contract (stx-transfer? wager tx-sender p1))) true)
-                        (match p2-opt p2 (if (> wager u0) (try! (as-contract (stx-transfer? wager tx-sender p2))) true) true)
+                        (if (> wager u0) (try! (as-contract (contract-call? .stackchess-token transfer wager tx-sender p1 none))) true)
+                        (match p2-opt p2 (if (> wager u0) (try! (as-contract (contract-call? .stackchess-token transfer wager tx-sender p2 none))) true) true)
                     )
                 )
             )
