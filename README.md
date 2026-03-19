@@ -1,87 +1,85 @@
-# 🎮 Dojo Game Starter - Frontend Integration Guide
+# ♟️ Stackchess - Onchain Chess on Stacks
 
-> **Complete React + Dojo integration documentation**
-> From zero to onchain game in 5 minutes ⚡
+> **Complete React + Clarity integration documentation**
+> Play chess and wager STX securely on the Stacks blockchain ⚡
 
-[![Starknet](https://img.shields.io/badge/Starknet-Ready-orange)](https://starknet.io) [![Cairo](https://img.shields.io/badge/Cairo-2.0-blue)](https://cairo-lang.org) [![Dojo](https://img.shields.io/badge/Dojo-ECS-red)](https://dojoengine.org)
+[![Stacks](https://img.shields.io/badge/Stacks-Ready-purple)](https://stacks.co) [![Clarity](https://img.shields.io/badge/Clarity-2.0-blue)](https://clarity-lang.org) [![React](https://img.shields.io/badge/React-18-blue)](https://react.dev)
 
-## 🚀 Quick Start
-
-> Controller requires the client to run over HTTPS, so make sure you have the `mkcert` package installed on your system
-
-```bash
-git clone https://github.com/your-username/dojo-game-starter
-cd dojo-game-starter/client
-npm install && npm run mkcert && npm run dev:https
-```
-
-**That's it!** Your client is running locally with wallet integration, optimistic updates, and seamless blockchain connectivity.
-
-> Note: this quickstart will connect your client to the existing Sepolia deployment, not your local version!
+Welcome to **Stackchess**, a fully decentralized chess application built on the Stacks blockchain. Stackchess enables players to engage in PvP chess matches, completely tracked and resolved using a Clarity smart contract state-machine, with STX token wagers on the line.
 
 ---
 
-## 📚 Complete Integration Guide
+## 🏗️ Project Structure
 
-This documentation series explains how to build robust onchain games using React + Dojo + Starknet. Follow the guides in order for best understanding:
+The repository is organized into a monorepo containing both the frontend web application and the Clarity smart contracts.
 
-### **🏗️ Foundation**
-| Guide | Description | Key Topics |
-|-------|-------------|------------|
-| **[01. Overview](./docs/01-overview.md)** | Big picture and core concepts | Architecture, data flow, gaming UX |
-| **[02. Architecture](./docs/02-architecture.md)** | System design and components | Providers, layers, performance |
-| **[03. Core Files](./docs/03-core-files.md)** | Essential files and their roles | Bindings, contracts, configuration |
+```text
+stackchess/
+├── frontend/      # React + Vite web application
+└── contract/      # Clarinet project with Clarity smart contracts
+```
 
-### **🔧 Integration**
-| Guide | Description | Key Topics |
-|-------|-------------|------------|
-| **[04. Zustand State Management](./docs/04-zustand-state-management.md)** | Global state and optimistic updates | Store patterns, performance, persistence |
-| **[05. Cartridge Controller](./docs/05-cartridge-controller.md)** | Gaming wallet integration | Session policies, seamless UX |
-| **[06. React Hooks Pattern](./docs/06-react-hooks-pattern.md)** | Custom hooks for blockchain | Data fetching, actions, coordination |
+---
 
-### **⚡ Advanced**
-| Guide | Description | Key Topics |
-|-------|-------------|------------|
-| **[07. Data Flow](./docs/07-data-flow.md)** | Complete request/response cycles | Real-time gameplay, state sync |
-| **[08. Extending the System](./docs/08-extending-system.md)** | Building your dream game | Extension strategies, development approach |
+## 🚀 Quick Start
+
+### 1. Running the Frontend
+
+The frontend is a modern React application powered by Vite, providing the chess logic, UI, and Stacks wallet integration.
+
+```bash
+git clone https://github.com/morelucks/stackchess.git
+cd stackchess/frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+Your client will be running locally at `http://localhost:5173` with optimistic updates and seamless blockchain connectivity.
+
+### 2. Developing the Smart Contract
+
+The core game logic and STX wagering system are managed by a Clarity smart contract (`stackchess.clar`). You need [Clarinet](https://github.com/hirosystems/clarinet) installed to interact with it.
+
+```bash
+cd stackchess/contract
+
+# Check the syntax of the Clarity contracts
+clarinet check
+
+# Run the Clarinet console to interact locally
+clarinet console
+```
+
+---
+
+## 📚 Technical Architecture
+
+### **The Frontend (`frontend/`)**
+- **Framework**: React + Vite + TypeScript
+- **Styling**: TailwindCSS
+- **State Management**: React `useReducer` for complex chess logic, combined with Context API.
+- **Blockchain Integration**: (Planned) `@stacks/connect` for wallet authentication and transaction signing.
+
+### **The Smart Contract (`contract/`)**
+- **Language**: Clarity
+- **Core Features**:
+  1. **Game Creation**: Players escrow STX to initialize a match (`create-game`).
+  2. **Matchmaking**: Opponents match the wager to join (`join-game`).
+  3. **State Machine**: Sequential validation of turns using FEN/ASCII board states (`submit-move`).
+  4. **Resolution**: Securely handles forfeits (`resign`) or mutually/Oracle-agreed game resolutions (`resolve-game`).
 
 ---
 
 ## 🎯 What You'll Learn
 
-By following this guide series, you'll master:
-
-**🏗️ Technical Integration**
-- React + Dojo + Starknet architecture
-- Optimistic updates for instant UX
-- Type-safe contract interactions
-- Custom hooks for blockchain operations
-
-**🎮 Gaming-Specific Patterns**
-- Cartridge Controller for seamless wallet UX
-- Session policies for uninterrupted gameplay
-- Real-time state synchronization
-- Error handling for blockchain operations
-
-**🚀 Production Best Practices**
-- Performance optimization techniques
-- Testing strategies for Web3 apps
-- Deployment and environment management
-- Scalable architecture patterns
-
----
-
-## 🎮 Game Mechanics Demo
-
-The starter includes three core actions that demonstrate different interaction patterns:
-
-| Action | Effect | Demonstrates |
-|--------|--------|--------------|
-| 🏋️ **Train** | +10 EXP | Pure advancement mechanics |
-| ⛏️ **Mine** | +5 Coins, -5 Health | Risk/reward decisions |
-| 💤 **Rest** | +20 Health | Resource management |
-
-These simple mechanics showcase the complete integration stack: from Cairo contracts to React components, with optimistic updates and error handling.
+By exploring this repository, you'll see how to:
+- Structure a monorepo for Stacks DApp development.
+- Build complex game state handlers in React.
+- Write robust, trustless state-machines in Clarity to track off-chain game progression securely.
 
 ---
 
@@ -89,66 +87,24 @@ These simple mechanics showcase the complete integration stack: from Cairo contr
 
 ```
 Frontend:  React + Vite + TypeScript + TailwindCSS
-State:     Zustand + React Query patterns
-Wallet:    Cartridge Controller + Starknet React
-Blockchain: Dojo + Cairo + Starknet
-Data:      Torii GraphQL + Optimistic Updates
+State:     Context API + useReducer
+Wallet:    Stacks Wallet (Leather/Xverse)
+Contract:  Clarity + Clarinet
 ```
-
----
-
-## 🎯 Perfect For
-
-- 🏆 **Hackathon teams** needing quick onchain game setup
-- 🎮 **Game developers** entering Web3 space
-- 🏢 **Studios** prototyping blockchain games
-- 📚 **Developers** learning Starknet + Dojo
 
 ---
 
 ## 🌟 Key Features
 
 **⚡ Instant Feedback**
-- Optimistic updates for immediate UI response
-- Background blockchain confirmation
-- Automatic rollback on transaction failure
-
-**🎮 Gaming-First UX**
-- Cartridge Controller integration
-- Session policies for seamless actions
-- No wallet popups during gameplay
+- Playable purely in the browser with local move validation.
+- Background blockchain confirmation without interrupting gameplay.
 
 **🔧 Developer Experience**
-- Complete TypeScript integration
-- Hot reload with contract changes
-- Comprehensive error handling
-- Testing strategies included
-
-**🚀 Production Ready**
-- Environment-based configuration
-- Performance optimizations
-- Deployment best practices
-- Monitoring and analytics patterns
+- Complete TypeScript integration for strict type-safety.
+- Separated boundaries between the `contract` and `frontend`.
+- Zero-error ESLint configuration and production-ready `npm run build` process.
 
 ---
 
-## 🚀 Getting Started
-
-1. **Start with [Overview](./docs/01-overview.md)** to understand the big picture
-2. **Follow the guides in order** for comprehensive understanding
-3. **Reference specific topics** as needed during development
-4. **Use [Extending the System](./docs/09-extending-system.md)** to build your unique game
-
-Each guide builds upon the previous ones, creating a complete learning path from basic concepts to advanced implementation patterns.
-
----
-
-## 📞 Support
-
-- 💬 **Discord**: [Dojo Engine Community](https://discord.com/invite/dojoengine)
-- 📚 **Docs**: [Official Dojo Documentation](https://dojoengine.org)
-- 🐦 **Twitter**: [@ohayo_dojo](https://twitter.com/ohayo_dojo)
-
----
-
-**Ready to build the future of onchain gaming?** Start with the [Overview](./docs/01-overview.md) and begin your journey! 🚀
+**Ready to build the future of onchain gaming?** Jump into the `frontend/` and `contract/` directories to begin! 🚀
