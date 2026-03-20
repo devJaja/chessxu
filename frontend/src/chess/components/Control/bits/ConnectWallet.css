@@ -1,0 +1,47 @@
+.connect-wallet {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.wallet-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+}
+
+.wallet-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.wallet-dot--connected {
+    background-color: #48bb78;
+    box-shadow: 0 0 8px #48bb78;
+}
+
+.wallet-address {
+    font-family: monospace;
+}
+
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    align-self: flex-start;
+}
+
+.btn-small:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.btn-full {
+    width: 100%;
+}

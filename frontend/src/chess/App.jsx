@@ -12,6 +12,7 @@ import { loadGameResults, clearGameResults } from './helper/localStorage';
 import Popup from './components/Popup/Popup';
 import StakingModal from './components/Popup/StakingModal/StakingModal';
 import { getStakeData } from './helper/stakeStorage';
+import ConnectWallet from './components/Control/bits/ConnectWallet';
 
 // Leaderboard Component
 const Leaderboard = ({ results, onClear }) => {
@@ -145,6 +146,7 @@ function App() {
                     <Board/>
                 </div>
                 <Control>
+                    <ConnectWallet />
                     <MovesList/>
                     <TakeBack/>
                     <Leaderboard results={leaderboardResults} onClear={handleClearLeaderboard} />
