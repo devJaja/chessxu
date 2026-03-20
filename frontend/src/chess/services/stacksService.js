@@ -1,6 +1,6 @@
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
-import { showConnect, openContractCall } from '@stacks/connect';
-import { uintCV, boolCV, stringAsciiCV, AnchorMode, PostConditionMode } from '@stacks/transactions';
+import { showConnect, openContractCall, callReadOnlyFunction } from '@stacks/connect';
+import { uintCV, boolCV, stringAsciiCV, cvToValue, AnchorMode, PostConditionMode } from '@stacks/transactions';
 import { NETWORK, CONTRACTS } from '../stacksConstants';
 
 const network = NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet();
@@ -94,6 +94,31 @@ const stacksService = {
       onFinish,
       onCancel,
     });
+  },
+
+  /**
+   * Fetches the current game state from the blockchain
+   * @param {number} gameId - The ID of the game to fetch
+   * @returns {Promise<Object>} The game state object
+   */
+  getGameState: async (gameId) => {
+    const [contractAddress, contractName] = CONTRACTS.GAME.split('.');
+    
+    try {
+      const response = await callReadOnlyFunction({
+        contractAddress,
+        contractName,
+        functionName: 'get-game',
+        functionArgs: [uintCV(gameId)],
+        network,
+        senderAddress: STACKCHESS_DEPLOYER, // Use deployer as default sender for read-only
+      });
+      
+      return cvToValue(response).value;
+    } catch (error) {
+      console.error('Error fetching game state:', error);
+      return null;
+    }
   },
 };
 
