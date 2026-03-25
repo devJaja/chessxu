@@ -5,14 +5,17 @@ import CTASection from "../landing/CTASection";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
+import useAppStore from "../../zustand/store";
+import { useStacksChess } from "../../hooks/useStacksChess";
+
 export default function LandingPage() {
   const navigate = useNavigate();
-  const isConnected = false;
+  const { address, isAuthenticated: isConnected, logout: handleDisconnect } = useAppStore();
+  const { createGame, joinGame } = useStacksChess();
   const isConnecting = false;
-  const address = "";
-  const controllerUsername = "";
-  const handleConnect = async () => console.log("Connect to Stacks");
-  const handleDisconnect = () => console.log("Disconnect from Stacks");
+  
+  const [wager, setWager] = useState(0);
+  const [idToJoin, setIdToJoin] = useState("");
   const [shouldNavigateAfterConnect, setShouldNavigateAfterConnect] = useState(false);
 
   // Auto-navigate to chess page once wallet is connected (if user clicked a button)
@@ -125,8 +128,67 @@ export default function LandingPage() {
       </nav>
 
       {/* Content */}
-      <main className="relative pt-24">
+      <main className="relative pt-24 pb-20">
         <HeroSection onStartPlaying={handleStartPlaying} isConnecting={isConnecting} isConnected={isConnected} />
+        
+        {isConnected && (
+            <div className="container mx-auto px-6 max-w-4xl mt-12 mb-20 p-8 rounded-2xl border border-white/10 bg-slate-900/50 backdrop-blur-xl shadow-2xl">
+                <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                    On-chain Game Controls
+                </h2>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                    {/* Create Game */}
+                    <div className="p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition flex flex-col gap-4">
+                        <h3 className="text-xl font-semibold flex items-center gap-2">
+                             Create New Match
+                        </h3>
+                        <p className="text-sm text-white/60">Start a new chess game with an optional STX wager.</p>
+                        <div className="mt-auto">
+                            <label className="text-xs text-white/40 block mb-1">Wager (STX)</label>
+                            <input 
+                                type="number" 
+                                value={wager}
+                                onChange={(e) => setWager(Number(e.target.value))}
+                                className="w-full bg-slate-800 border border-white/10 rounded-lg p-3 text-sm mb-4 focus:ring-2 focus:ring-purple-500 outline-none"
+                                placeholder="0.0"
+                            />
+                            <button 
+                                onClick={() => createGame(wager * 1000000, true)}
+                                className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition"
+                            >
+                                Broadcast Create
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Join Game */}
+                    <div className="p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition flex flex-col gap-4">
+                        <h3 className="text-xl font-semibold flex items-center gap-2">
+                             Join Existing Match
+                        </h3>
+                        <p className="text-sm text-white/60">Enter a Game ID to join an opponent's match.</p>
+                        <div className="mt-auto">
+                            <label className="text-xs text-white/40 block mb-1">Game ID</label>
+                            <input 
+                                type="text"
+                                value={idToJoin}
+                                onChange={(e) => setIdToJoin(e.target.value)}
+                                className="w-full bg-slate-800 border border-white/10 rounded-lg p-3 text-sm mb-4 focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Match ID"
+                            />
+                            <button 
+                                onClick={() => joinGame(Number(idToJoin), 0, true)}
+                                className="w-full py-3 border border-blue-500/50 hover:bg-blue-500/10 rounded-xl font-bold transition"
+                            >
+                                Join Match
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )}
+
         <div id="features">
           <FeatureGrid />
         </div>
