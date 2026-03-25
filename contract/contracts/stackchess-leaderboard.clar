@@ -103,3 +103,52 @@
     )
 )
 
+;; ===========================
+;; Public Match Recording
+;; ===========================
+
+;; Record a win/loss result. Can only be called by the stackchess game contract.
+(define-public (record-win (winner principal) (loser principal))
+    (let (
+        (winner-inited (ensure-player-exists winner))
+        (loser-inited (ensure-player-exists loser))
+        (w-stats (unwrap! (map-get? player-stats { player: winner }) err-player-not-found))
+        (l-stats (unwrap! (map-get? player-stats { player: loser }) err-player-not-found))
+        (w-elo (get elo w-stats))
+        (l-elo (get elo l-stats))
+        (w-streak (+ (get streak w-stats) u1))
+        (w-best-streak (if (> w-streak (get best-streak w-stats)) w-streak (get best-streak w-stats)))
+    )
+        ;; Enforce authorization (only the game contract can report results)
+        (asserts! (is-eq contract-caller stackchess-contract) err-not-authorized)
+        (asserts! (not (is-eq winner loser)) err-same-player)
+
+        ;; Update winner
+        (map-set player-stats { player: winner }
+            (merge w-stats {
+                wins: (+ (get wins w-stats) u1),
+                total-games: (+ (get total-games w-stats) u1),
+                elo: (+ w-elo (elo-win-delta w-elo l-elo)),
+                streak: w-streak,
+                best-streak: w-best-streak
+            })
+        )
+
+        ;; Update loser
+        (map-set player-stats { player: loser }
+            (merge l-stats {
+                losses: (+ (get losses l-stats) u1),
+                total-games: (+ (get total-games l-stats) u1),
+                elo: (- l-elo (elo-loss-delta w-elo l-elo)),
+                streak: u0
+            })
+        )
+
+        ;; Update global stats
+        (var-set total-games-played (+ (var-get total-games-played) u1))
+        (var-set total-decisive-games (+ (var-get total-decisive-games) u1))
+
+        (ok true)
+    )
+)
+
