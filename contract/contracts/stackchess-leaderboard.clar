@@ -14,3 +14,21 @@
 (define-constant err-invalid-result     (err u102))
 (define-constant err-same-player        (err u103))
 
+;; ===========================
+;; Data Maps
+;; ===========================
+
+;; Per-player statistics
+(define-map player-stats
+    { player: principal }
+    {
+        wins:         uint,
+        losses:       uint,
+        draws:        uint,
+        total-games:  uint,
+        elo:          uint,    ;; ELO rating (starts at 1200)
+        streak:       uint,    ;; current win streak
+        best-streak:  uint     ;; all-time best win streak
+    }
+)
+
