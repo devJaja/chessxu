@@ -206,3 +206,12 @@
     )
 )
 
+;; Get global platform statistics
+(define-read-only (get-global-stats)
+    {
+        total-games: (var-get total-games-played),
+        total-decisive: (var-get total-decisive-games),
+        total-players: (var-get total-players-registered)
+    }
+)
+
