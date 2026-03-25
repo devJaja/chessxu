@@ -1,17 +1,30 @@
 // Import the chess components
 import ChessGameWrapper from "../ChessGameWrapper";
 import { useState, useEffect } from "react";
+import useAppStore from "../../zustand/store";
+import { useStacksChess } from "../../hooks/useStacksChess";
+import { useInterval } from "../../hooks/useInterval";
 
 export default function ChessScreen() {
-  const isConnected = false;
+  const { address, isAuthenticated: isConnected, logout: handleDisconnect } = useAppStore();
+  const { getGame } = useStacksChess();
   const isConnecting = false;
-  const handleConnect = () => console.log("Connect to Stacks");
-  const handleDisconnect = () => console.log("Disconnect from Stacks");
-  const address = "";
-  const controllerUsername = "";
+  const handleConnect = () => console.log("Use the header button to connect");
   const initializePlayer = () => console.log("Initialize Stacks Player");
   const isInitializing = false;
+  const activeGameId = useAppStore((s) => s.activeGameId);
   const [currentGameMode, setCurrentGameMode] = useState('pvc');
+
+  // Poll blockchain for opponent moves every 15s when a game is active
+  useInterval(() => {
+    if (activeGameId !== null) {
+      getGame(activeGameId).then((result) => {
+        if (result) {
+          console.log('[poll] game state:', result);
+        }
+      });
+    }
+  }, isConnected && activeGameId !== null ? 15000 : null);
 
   // Listen for game mode changes from localStore
   useEffect(() => {
@@ -45,9 +58,9 @@ export default function ChessScreen() {
               </div>
             )}
             <p className="text-xs text-slate-400">
-              Stacks Blockchain Foundation
-              {controllerUsername ? (
-                <span className="ml-2 text-white">• {controllerUsername}</span>
+              Stacks Blockchain
+              {address ? (
+                <span className="ml-2 text-white">• {address.slice(0, 6)}…{address.slice(-4)}</span>
               ) : null}
             </p>
           </div>
