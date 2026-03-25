@@ -6,7 +6,7 @@ import useAppStore, { userSession } from "../zustand/store";
 import { ToasterProvider } from "../components/ui/toasts/ToasterProvider";
 
 function App() {
-  const { setAddress } = useAppStore();
+  const setAddress = useAppStore((state) => state.setAddress);
 
   useEffect(() => {
     if (userSession.isUserSignedIn()) {
