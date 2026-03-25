@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "../components/pages/LandingPage";
 import ChessScreen from "../components/pages/ChessScreen";
 import useAppStore, { userSession } from "../zustand/store";
+import { ToasterProvider } from "../components/ui/toasts/ToasterProvider";
 
 function App() {
   const { setAddress } = useAppStore();
@@ -16,12 +17,14 @@ function App() {
   }, [setAddress]);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/chess" element={<ChessScreen />} />
-      </Routes>
-    </BrowserRouter>
+    <ToasterProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/chess" element={<ChessScreen />} />
+        </Routes>
+      </BrowserRouter>
+    </ToasterProvider>
   );
 }
 
