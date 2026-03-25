@@ -1,11 +1,12 @@
 import { openContractCall } from '@stacks/connect';
 import { 
   uintCV, 
+import { 
+  uintCV, 
   boolCV, 
   stringAsciiCV, 
   PostConditionMode,
-  Pc,
-  Cl
+  Pc
 } from '@stacks/transactions';
 import { STACKS_MAINNET } from '@stacks/network';
 import useAppStore from '../zustand/store';
