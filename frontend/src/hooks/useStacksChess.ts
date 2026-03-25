@@ -1,4 +1,4 @@
-import { openContractCall, callReadOnlyFunction } from '@stacks/connect';
+import { openContractCall } from '@stacks/connect';
 import { 
   uintCV, 
   boolCV, 
@@ -6,7 +6,8 @@ import {
   PostConditionMode,
   Pc,
   Cl,
-  cvToValue
+  cvToValue,
+  fetchCallReadOnlyFunction
 } from '@stacks/transactions';
 import { STACKS_MAINNET } from '@stacks/network';
 import useAppStore from '../zustand/store';
@@ -138,7 +139,7 @@ export const useStacksChess = () => {
     };
 
     try {
-      const result = await callReadOnlyFunction(options);
+      const result = await fetchCallReadOnlyFunction(options);
       return result;
     } catch (e) {
       console.error('Error fetching game:', e);
