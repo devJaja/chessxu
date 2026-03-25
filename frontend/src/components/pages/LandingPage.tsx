@@ -142,6 +142,7 @@ export default function LandingPage() {
                     {/* Create Game */}
                     <div className="p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition flex flex-col gap-4">
                         <h3 className="text-xl font-semibold flex items-center gap-2">
+                             <Sword className="text-purple-400" size={20} />
                              Create New Match
                         </h3>
                         <p className="text-sm text-white/60">Start a new chess game with an optional STX wager.</p>
@@ -166,6 +167,7 @@ export default function LandingPage() {
                     {/* Join Game */}
                     <div className="p-6 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition flex flex-col gap-4">
                         <h3 className="text-xl font-semibold flex items-center gap-2">
+                             <Users className="text-blue-400" size={20} />
                              Join Existing Match
                         </h3>
                         <p className="text-sm text-white/60">Enter a Game ID to join an opponent's match.</p>
