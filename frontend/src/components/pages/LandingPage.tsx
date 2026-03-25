@@ -8,12 +8,20 @@ import { Users, Sword } from "lucide-react";
 
 import useAppStore from "../../zustand/store";
 import { useStacksChess } from "../../hooks/useStacksChess";
+import { showConnect } from "@stacks/connect-react";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const { address, isAuthenticated: isConnected, logout: handleDisconnect } = useAppStore();
   const { createGame, joinGame } = useStacksChess();
   const isConnecting = false;
+  
+  const handleConnect = async () => {
+    showConnect({
+      appDetails: { name: "Stackchess", icon: window.location.origin + "/favicon.ico" },
+      onFinish: () => console.log("Connected on landing page"),
+    });
+  };
   
   const [wager, setWager] = useState(0);
   const [idToJoin, setIdToJoin] = useState("");
@@ -100,7 +108,6 @@ export default function LandingPage() {
               <div className="flex items-center gap-3">
                 <span className="text-xs text-purple-200">
                   {address?.slice(0, 6)}...{address?.slice(-4)}
-                  {controllerUsername && ` • ${controllerUsername}`}
                 </span>
                 <button
                   onClick={handleStartPlaying}

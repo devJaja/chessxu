@@ -1,9 +1,7 @@
-import { useConnect, showConnect } from "@stacks/connect-react";
-import { Wallet, LogOut, User } from "lucide-react";
+import { showConnect } from "@stacks/connect-react";
+import { Wallet, LogOut } from "lucide-react";
 
 export function Header() {
-  const { signout } = useConnect();
-
   // We can get the user data from session, but for now let's just use the connection flow
   // We'll update this once we have the Zustand store refined
   const isAuthenticated = false; // Placeholder for now
@@ -13,12 +11,16 @@ export function Header() {
     showConnect({
       appDetails: {
         name: "Stackchess",
-        icon: window.location.origin + "/logo.png",
+        icon: window.location.origin + "/favicon.ico",
       },
       onFinish: () => {
         window.location.reload();
       },
     });
+  };
+
+  const handleDisconnect = () => {
+    // Will be connected to userSession.signUserOut() later
   };
 
   return (
@@ -42,7 +44,7 @@ export function Header() {
               </span>
             </div>
             <button
-              onClick={() => signout()}
+              onClick={handleDisconnect}
               className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full transition-colors border border-slate-700"
               title="Disconnect"
             >

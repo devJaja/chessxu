@@ -5,8 +5,6 @@ import {
   stringAsciiCV, 
   PostConditionMode,
   Pc,
-  Cl,
-  cvToValue,
   fetchCallReadOnlyFunction
 } from '@stacks/transactions';
 import { STACKS_MAINNET } from '@stacks/network';

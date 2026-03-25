@@ -20,7 +20,7 @@ export interface GameState {
 export interface AppStore extends AuthState, GameState {
   // Actions
   setAddress: (address: string | null) => void;
-  setIsLoading: (isLoading) => void;
+  setIsLoading: (isLoading: boolean) => void;
   setActiveGameId: (gameId: number | null) => void;
   setGameStarted: (started: boolean) => void;
   logout: () => void;
