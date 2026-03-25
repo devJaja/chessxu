@@ -152,3 +152,40 @@
     )
 )
 
+;; Record a draw result. No ELO change, just bumps total games and draw counters.
+(define-public (record-draw (player-a principal) (player-b principal))
+    (let (
+        (a-inited (ensure-player-exists player-a))
+        (b-inited (ensure-player-exists player-b))
+        (a-stats (unwrap! (map-get? player-stats { player: player-a }) err-player-not-found))
+        (b-stats (unwrap! (map-get? player-stats { player: player-b }) err-player-not-found))
+    )
+        ;; Enforce authorization
+        (asserts! (is-eq contract-caller stackchess-contract) err-not-authorized)
+        (asserts! (not (is-eq player-a player-b)) err-same-player)
+
+        ;; Update Player A
+        (map-set player-stats { player: player-a }
+            (merge a-stats {
+                draws: (+ (get draws a-stats) u1),
+                total-games: (+ (get total-games a-stats) u1),
+                streak: u0  ;; Draw resets win streak
+            })
+        )
+
+        ;; Update Player B
+        (map-set player-stats { player: player-b }
+            (merge b-stats {
+                draws: (+ (get draws b-stats) u1),
+                total-games: (+ (get total-games b-stats) u1),
+                streak: u0
+            })
+        )
+
+        ;; Update global stats
+        (var-set total-games-played (+ (var-get total-games-played) u1))
+
+        (ok true)
+    )
+)
+
