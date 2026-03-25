@@ -189,3 +189,12 @@
     )
 )
 
+;; ===========================
+;; Read-Only Queries
+;; ===========================
+
+;; Get full stats for a specific player
+(define-read-only (get-player-stats (player principal))
+    (map-get? player-stats { player: player })
+)
+
