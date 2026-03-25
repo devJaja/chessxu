@@ -32,3 +32,12 @@
     }
 )
 
+;; ===========================
+;; Global Data Variables
+;; ===========================
+
+(define-data-var total-games-played uint u0)
+(define-data-var total-decisive-games uint u0)  ;; wins + losses (not draws)
+(define-data-var total-players-registered uint u0)
+(define-data-var default-elo uint u1200)        ;; starting ELO for new players
+
