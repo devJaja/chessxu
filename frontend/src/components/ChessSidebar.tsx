@@ -5,6 +5,7 @@ import { loadGameResults, clearGameResults } from '../chess/helper/localStorage'
 import { getStakeData, clearStakeData } from '../chess/helper/stakeStorage';
 import actionTypes from '../chess/reducer/actionTypes';
 import StakingModal from '../chess/components/Popup/StakingModal/StakingModal';
+import OnChainLeaderboard from './OnChainLeaderboard';
 import './ChessSidebar.css';
 
 
@@ -246,10 +247,13 @@ export default function ChessSidebar() {
             )}
 
             {activeTab === 'leaderboard' && (
-                <Leaderboard 
-                    results={leaderboardResults} 
-                    onClear={handleClearLeaderboard}
-                />
+                <>
+                    <Leaderboard 
+                        results={leaderboardResults} 
+                        onClear={handleClearLeaderboard}
+                    />
+                    <OnChainLeaderboard />
+                </>
             )}
 
             {/* Staking Modal */}
