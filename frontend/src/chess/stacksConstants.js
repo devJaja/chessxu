@@ -16,4 +16,7 @@ export const GAME_STATUS = {
   CANCELLED: 5,
 };
 
+export const DEFAULT_ELO = 1200;
+export const ELO_K_FACTOR = 32;
+
 export const NETWORK = 'mainnet';
