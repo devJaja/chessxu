@@ -106,6 +106,28 @@ const stacksService = {
   },
 
   /**
+   * Fetches the last game ID from the contract
+   * @returns {Promise<number>} The last game ID
+   */
+  getLastGameId: async () => {
+    const [contractAddress, contractName] = getContractParts(CONTRACTS.GAME);
+    try {
+      const response = await callReadOnlyFunction({
+        contractAddress,
+        contractName,
+        functionName: 'get-last-game-id',
+        functionArgs: [],
+        network,
+        senderAddress: STACKCHESS_DEPLOYER,
+      });
+      return Number(cvToValue(response));
+    } catch (error) {
+      console.error('Error fetching last game ID:', error);
+      return 0;
+    }
+  },
+
+  /**
    * Resigns from an active game
    * @param {number} gameId - The game to resign from
    */
