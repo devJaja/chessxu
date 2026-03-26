@@ -1,7 +1,7 @@
 import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { showConnect, openContractCall, callReadOnlyFunction } from '@stacks/connect';
-import { uintCV, boolCV, stringAsciiCV, cvToValue, AnchorMode, PostConditionMode } from '@stacks/transactions';
-import { NETWORK, CONTRACTS } from '../stacksConstants';
+import { uintCV, boolCV, stringAsciiCV, cvToValue, AnchorMode, PostConditionMode, principalCV } from '@stacks/transactions';
+import { NETWORK, CONTRACTS, STACKCHESS_DEPLOYER } from '../stacksConstants';
 
 const network = NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet();
 
@@ -120,13 +120,106 @@ const stacksService = {
         functionName: 'get-game',
         functionArgs: [uintCV(gameId)],
         network,
-        senderAddress: STACKCHESS_DEPLOYER, // Use deployer as default sender for read-only
+        senderAddress: STACKCHESS_DEPLOYER,
       });
       
       return cvToValue(response).value;
     } catch (error) {
       console.error('Error fetching game state:', error);
       return null;
+    }
+  },
+
+  /**
+   * Fetches on-chain stats for a specific player from the leaderboard contract
+   * @param {string} playerAddress - The player's STX address
+   * @returns {Promise<Object|null>} Player stats or null
+   */
+  getPlayerStats: async (playerAddress) => {
+    const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
+    try {
+      const response = await callReadOnlyFunction({
+        contractAddress,
+        contractName,
+        functionName: 'get-player-stats',
+        functionArgs: [principalCV(playerAddress)],
+        network,
+        senderAddress: STACKCHESS_DEPLOYER,
+      });
+      const val = cvToValue(response);
+      return val ? val.value : null;
+    } catch (error) {
+      console.error('Error fetching player stats:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Fetches the ELO rating for a player
+   * @param {string} playerAddress - The player's STX address
+   * @returns {Promise<number>} ELO rating (defaults to 1200)
+   */
+  getPlayerElo: async (playerAddress) => {
+    const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
+    try {
+      const response = await callReadOnlyFunction({
+        contractAddress,
+        contractName,
+        functionName: 'get-player-elo',
+        functionArgs: [principalCV(playerAddress)],
+        network,
+        senderAddress: STACKCHESS_DEPLOYER,
+      });
+      return Number(cvToValue(response));
+    } catch (error) {
+      console.error('Error fetching player ELO:', error);
+      return 1200;
+    }
+  },
+
+  /**
+   * Fetches global leaderboard statistics
+   * @returns {Promise<Object>} Global stats: total-games, total-decisive, total-players
+   */
+  getGlobalStats: async () => {
+    const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
+    try {
+      const response = await callReadOnlyFunction({
+        contractAddress,
+        contractName,
+        functionName: 'get-global-stats',
+        functionArgs: [],
+        network,
+        senderAddress: STACKCHESS_DEPLOYER,
+      });
+      return cvToValue(response);
+    } catch (error) {
+      console.error('Error fetching global stats:', error);
+      return null;
+    }
+  },
+
+  /**
+   * Fetches expected win probability between two players (0–1000 scale)
+   * @param {string} playerA - Address of player A
+   * @param {string} playerB - Address of player B
+   * @returns {Promise<number>} Expected score * 1000
+   */
+  getExpectedScore: async (playerA, playerB) => {
+    const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
+    try {
+      const response = await callReadOnlyFunction({
+        contractAddress,
+        contractName,
+        functionName: 'get-expected-score',
+        functionArgs: [principalCV(playerA), principalCV(playerB)],
+        network,
+        senderAddress: STACKCHESS_DEPLOYER,
+      });
+      return Number(cvToValue(response));
+    } catch (error) {
+      console.error('Error fetching expected score:', error);
+      return 500;
     }
   },
 };
