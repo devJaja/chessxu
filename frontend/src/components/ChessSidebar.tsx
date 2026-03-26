@@ -8,6 +8,7 @@ import StakingModal from '../chess/components/Popup/StakingModal/StakingModal';
 import OnChainLeaderboard from './OnChainLeaderboard';
 import PlayerEloCard from './PlayerEloCard';
 import GameStatusBanner from './GameStatusBanner';
+import ResignButton from './ResignButton';
 import { useGameState } from '../chess/hooks/useGameState';
 import useAppStore from '../zustand/store';
 import './ChessSidebar.css';
@@ -253,6 +254,8 @@ export default function ChessSidebar() {
                         onShowStakingModal={setShowStakingModal}
                     />
                     <TakeBackButton />
+                    {/* Resign only shown in PvP with an active game */}
+                    {gameMode === 'pvp' && <ResignButton />}
                     {/* Stake section always visible under controls */}
                     <StakeSection appState={appState} />
                 </>
