@@ -106,6 +106,25 @@ const stacksService = {
   },
 
   /**
+   * Resigns from an active game
+   * @param {number} gameId - The game to resign from
+   */
+  resignGame: (gameId, onFinish, onCancel) => {
+    const [contractAddress, contractName] = getContractParts(CONTRACTS.GAME);
+    openContractCall({
+      contractAddress,
+      contractName,
+      functionName: 'resign',
+      functionArgs: [uintCV(gameId)],
+      network,
+      anchorMode: AnchorMode.Any,
+      postConditionMode: PostConditionMode.Allow,
+      onFinish,
+      onCancel,
+    });
+  },
+
+  /**
    * Fetches the current game state from the blockchain
    * @param {number} gameId - The ID of the game to fetch
    * @returns {Promise<Object>} The game state object
