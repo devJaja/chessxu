@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAppContext } from '../../../contexts/Context';
 import { setupNewGame } from '../../../reducer/actions/game';
 import { saveStakeData, getDummyBalance, simulateStakeTransaction, resetDummyBalance } from '../../../helper/stakeStorage';
+import { winProbabilityPercent, projectEloAfterWin } from '../../../utils/eloUtils';
 import './StakingModal.css';
 
 const StakingModal = ({ onClosePopup }) => {
@@ -147,6 +148,14 @@ const StakingModal = ({ onClosePopup }) => {
                         <span className="info-value">
                             {stakeAmount && isValidAmount ? `${(parseFloat(stakeAmount) * 1.8).toFixed(2)} STX` : '-- STX'}
                         </span>
+                    </div>
+                    <div className="info-item">
+                        <span className="info-label">Win Probability:</span>
+                        <span className="info-value">{winProbabilityPercent(1200, 1200)}%</span>
+                    </div>
+                    <div className="info-item">
+                        <span className="info-label">ELO if you win:</span>
+                        <span className="info-value">+{projectEloAfterWin(1200, 1200).newWinnerElo - 1200} pts</span>
                     </div>
                 </div>
             </div>
