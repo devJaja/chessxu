@@ -1,5 +1,6 @@
 import { useGlobalStats, usePlayerStats } from '../chess/hooks/useLeaderboard';
 import useAppStore from '../zustand/store';
+import './OnChainLeaderboard.css';
 
 interface PlayerRowProps {
   address: string;
