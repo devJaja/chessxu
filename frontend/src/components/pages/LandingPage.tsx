@@ -5,29 +5,19 @@ import CTASection from "../landing/CTASection";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Users, Sword } from "lucide-react";
-
-import useAppStore from "../../zustand/store";
-import { useStacksChess } from "../../hooks/useStacksChess";
-import { showConnect } from "@stacks/connect-react";
+import { useWalletAuth } from "../../hooks/useWalletAuth";
+import { useOnChainGame } from "../../chess/hooks/useOnChainGame";
 
 export default function LandingPage() {
   const navigate = useNavigate();
-  const { address, isAuthenticated: isConnected, logout: handleDisconnect } = useAppStore();
-  const { createGame, joinGame } = useStacksChess();
-  const isConnecting = false;
-  
-  const handleConnect = async () => {
-    showConnect({
-      appDetails: { name: "Stackchess", icon: window.location.origin + "/favicon.ico" },
-      onFinish: () => console.log("Connected on landing page"),
-    });
-  };
-  
-  const [wager, setWager] = useState(0);
+  const { address, isConnected, isConnecting, connect, disconnect } = useWalletAuth();
+  const { createGame, joinGame, activeGameId } = useOnChainGame();
+  const [wager, setWager] = useState("0");
   const [idToJoin, setIdToJoin] = useState("");
   const [shouldNavigateAfterConnect, setShouldNavigateAfterConnect] = useState(false);
+  const [isCreatingMatch, setIsCreatingMatch] = useState(false);
+  const [isJoiningMatch, setIsJoiningMatch] = useState(false);
 
-  // Auto-navigate to chess page once wallet is connected (if user clicked a button)
   useEffect(() => {
     if (isConnected && shouldNavigateAfterConnect) {
       setShouldNavigateAfterConnect(false);
@@ -35,16 +25,57 @@ export default function LandingPage() {
     }
   }, [isConnected, shouldNavigateAfterConnect, navigate]);
 
-  const handleStartPlaying = async () => {
+  const handleStartPlaying = () => {
     if (isConnected) {
-      // Already connected, navigate directly
       navigate("/chess");
-    } else {
-      // Not connected, set flag and connect
-      setShouldNavigateAfterConnect(true);
-      await handleConnect();
-      navigate("/chess"); // Mock navigation for now
+      return;
     }
+
+    setShouldNavigateAfterConnect(true);
+    connect();
+  };
+
+  const handleCreateMatch = () => {
+    if (!isConnected) {
+      connect();
+      return;
+    }
+
+    const parsedWager = Number.parseFloat(wager);
+    const wagerMicroStx = Number.isFinite(parsedWager) && parsedWager > 0 ? Math.floor(parsedWager * 1_000_000) : 0;
+
+    setIsCreatingMatch(true);
+    createGame(
+      wagerMicroStx,
+      true,
+      () => {
+        setIsCreatingMatch(false);
+        navigate("/chess");
+      },
+      () => setIsCreatingMatch(false),
+    );
+  };
+
+  const handleJoinMatch = () => {
+    if (!isConnected) {
+      connect();
+      return;
+    }
+
+    const gameId = Number.parseInt(idToJoin, 10);
+    if (!Number.isInteger(gameId) || gameId <= 0) {
+      return;
+    }
+
+    setIsJoiningMatch(true);
+    joinGame(
+      gameId,
+      () => {
+        setIsJoiningMatch(false);
+        navigate("/chess");
+      },
+      () => setIsJoiningMatch(false),
+    );
   };
 
   return (
@@ -116,7 +147,7 @@ export default function LandingPage() {
                   Play Now
                 </button>
                 <button
-                  onClick={handleDisconnect}
+                  onClick={disconnect}
                   className="px-3 py-2 rounded border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/10 transition text-xs"
                 >
                   Disconnect
@@ -144,6 +175,11 @@ export default function LandingPage() {
                 <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                     On-chain Game Controls
                 </h2>
+                {activeGameId ? (
+                  <div className="mb-6 rounded-xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                    Active match detected: #{activeGameId}. You can continue it from the chess screen.
+                  </div>
+                ) : null}
                 
                 <div className="grid md:grid-cols-2 gap-8">
                     {/* Create Game */}
@@ -158,15 +194,18 @@ export default function LandingPage() {
                             <input 
                                 type="number" 
                                 value={wager}
-                                onChange={(e) => setWager(Number(e.target.value))}
+                                min="0"
+                                step="0.1"
+                                onChange={(e) => setWager(e.target.value)}
                                 className="w-full bg-slate-800 border border-white/10 rounded-lg p-3 text-sm mb-4 focus:ring-2 focus:ring-purple-500 outline-none"
                                 placeholder="0.0"
                             />
                             <button 
-                                onClick={() => createGame(wager * 1000000, true)}
-                                className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition"
+                                onClick={handleCreateMatch}
+                                disabled={isCreatingMatch}
+                                className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl font-bold hover:scale-[1.02] active:scale-95 transition disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                Broadcast Create
+                                {isCreatingMatch ? "Opening Wallet..." : "Broadcast Create"}
                             </button>
                         </div>
                     </div>
@@ -188,10 +227,11 @@ export default function LandingPage() {
                                 placeholder="Match ID"
                             />
                             <button 
-                                onClick={() => joinGame(Number(idToJoin), 0, true)}
-                                className="w-full py-3 border border-blue-500/50 hover:bg-blue-500/10 rounded-xl font-bold transition"
+                                onClick={handleJoinMatch}
+                                disabled={isJoiningMatch || !idToJoin.trim()}
+                                className="w-full py-3 border border-blue-500/50 hover:bg-blue-500/10 rounded-xl font-bold transition disabled:opacity-60 disabled:cursor-not-allowed"
                             >
-                                Join Match
+                                {isJoiningMatch ? "Opening Wallet..." : "Join Match"}
                             </button>
                         </div>
                     </div>
@@ -208,4 +248,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
