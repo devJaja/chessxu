@@ -1,9 +1,18 @@
-import { StacksMainnet, StacksTestnet } from '@stacks/network';
-import { showConnect, openContractCall, callReadOnlyFunction } from '@stacks/connect';
-import { uintCV, boolCV, stringAsciiCV, cvToValue, AnchorMode, PostConditionMode, principalCV } from '@stacks/transactions';
+import { STACKS_MAINNET, STACKS_TESTNET } from '@stacks/network';
+import { showConnect, openContractCall } from '@stacks/connect';
+import {
+  uintCV,
+  boolCV,
+  stringAsciiCV,
+  cvToValue,
+  AnchorMode,
+  PostConditionMode,
+  principalCV,
+  fetchCallReadOnlyFunction,
+} from '@stacks/transactions';
 import { NETWORK, CONTRACTS, STACKCHESS_DEPLOYER } from '../stacksConstants';
 
-const network = NETWORK === 'mainnet' ? new StacksMainnet() : new StacksTestnet();
+const network = NETWORK === 'mainnet' ? STACKS_MAINNET : STACKS_TESTNET;
 
 /**
  * Helper to split a fully-qualified contract address into parts
@@ -112,7 +121,7 @@ const stacksService = {
   getLastGameId: async () => {
     const [contractAddress, contractName] = getContractParts(CONTRACTS.GAME);
     try {
-      const response = await callReadOnlyFunction({
+      const response = await fetchCallReadOnlyFunction({
         contractAddress,
         contractName,
         functionName: 'get-last-game-id',
@@ -155,7 +164,7 @@ const stacksService = {
     const [contractAddress, contractName] = getContractParts(CONTRACTS.GAME);
     
     try {
-      const response = await callReadOnlyFunction({
+      const response = await fetchCallReadOnlyFunction({
         contractAddress,
         contractName,
         functionName: 'get-game',
@@ -179,7 +188,7 @@ const stacksService = {
   getPlayerStats: async (playerAddress) => {
     const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
     try {
-      const response = await callReadOnlyFunction({
+      const response = await fetchCallReadOnlyFunction({
         contractAddress,
         contractName,
         functionName: 'get-player-stats',
@@ -203,7 +212,7 @@ const stacksService = {
   getPlayerElo: async (playerAddress) => {
     const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
     try {
-      const response = await callReadOnlyFunction({
+      const response = await fetchCallReadOnlyFunction({
         contractAddress,
         contractName,
         functionName: 'get-player-elo',
@@ -225,7 +234,7 @@ const stacksService = {
   getGlobalStats: async () => {
     const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
     try {
-      const response = await callReadOnlyFunction({
+      const response = await fetchCallReadOnlyFunction({
         contractAddress,
         contractName,
         functionName: 'get-global-stats',
@@ -249,7 +258,7 @@ const stacksService = {
   getExpectedScore: async (playerA, playerB) => {
     const [contractAddress, contractName] = getContractParts(CONTRACTS.LEADERBOARD);
     try {
-      const response = await callReadOnlyFunction({
+      const response = await fetchCallReadOnlyFunction({
         contractAddress,
         contractName,
         functionName: 'get-expected-score',
