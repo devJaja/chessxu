@@ -314,3 +314,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: deployer helpers extracted
 // test: create-game returns u1 for STX game
 // test: create-game returns u1 for token game
+// test: game id increments sequentially
