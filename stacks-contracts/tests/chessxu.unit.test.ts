@@ -311,3 +311,4 @@ describe("chessxu unit – read-only functions", () => {
 });
 
 // scaffold: stacks unit test suite initialized
+// test: deployer helpers extracted
