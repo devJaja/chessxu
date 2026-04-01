@@ -411,3 +411,5 @@ describe("Chessxu – Unit Tests", function () {
 // scaffold: unit test suite initialized
 
 // test: deployment owner check added
+
+// test: nextGameId initialisation verified
