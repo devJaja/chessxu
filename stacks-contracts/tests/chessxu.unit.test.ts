@@ -313,3 +313,4 @@ describe("chessxu unit – read-only functions", () => {
 // scaffold: stacks unit test suite initialized
 // test: deployer helpers extracted
 // test: create-game returns u1 for STX game
+// test: create-game returns u1 for token game
