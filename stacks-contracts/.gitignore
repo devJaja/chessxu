@@ -1,4 +1,5 @@
 
+.env
 **/settings/Mainnet.toml
 **/settings/Testnet.toml
 .cache/**

@@ -15,8 +15,9 @@ The repository is organized into a monorepo containing both the frontend web app
 
 ```text
 stackchess/
-├── frontend/      # React + Vite web application
-└── contract/      # Clarinet project with Clarity smart contracts
+├── frontend/          # React + Vite web application
+├── stacks-contracts/  # Clarinet project with Stacks smart contracts
+└── celo-contracts/    # Hardhat project with Celo smart contracts (EVM)
 ```
 
 ---
@@ -45,7 +46,7 @@ Your client will be running locally at `http://localhost:5173` with optimistic u
 The core game logic and STX wagering system are managed by a Clarity smart contract (`stackchess.clar`). You need [Clarinet](https://github.com/hirosystems/clarinet) installed to interact with it.
 
 ```bash
-cd stackchess/contract
+cd stackchess/stacks-contracts
 
 # Check the syntax of the Clarity contracts
 clarinet check
@@ -64,7 +65,7 @@ clarinet console
 - **State Management**: React `useReducer` for complex chess logic, combined with Context API.
 - **Blockchain Integration**: (Planned) `@stacks/connect` for wallet authentication and transaction signing.
 
-### **The Smart Contract (`contract/`)**
+### **The Smart Contract (`stacks-contracts/`)**
 - **Language**: Clarity
 - **Core Features**:
   1. **Game Creation**: Players escrow STX to initialize a match (`create-game`).
@@ -129,9 +130,9 @@ Contract:  Clarity + Clarinet
 
 **🔧 Developer Experience**
 - Complete TypeScript integration for strict type-safety.
-- Separated boundaries between the `contract` and `frontend`.
+- Separated boundaries between the `stacks-contracts` (and `celo-contracts`), and `frontend`.
 - Zero-error ESLint configuration and production-ready `npm run build` process.
 
 ---
 
-**Ready to build the future of onchain gaming?** Jump into the `frontend/` and `contract/` directories to begin! 🚀
+**Ready to build the future of onchain gaming?** Jump into the `frontend/`, `stacks-contracts/` or `celo-contracts/` directories to begin! 🚀

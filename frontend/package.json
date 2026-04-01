@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "stacks:check": "cd ../contract && clarinet check",
+    "stacks:check": "cd ../stacks-contracts && clarinet check",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
