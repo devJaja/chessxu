@@ -124,3 +124,9 @@ contract StackChess {
 
         uint256 prize = game.wager * 2;
 
+        if (msg.sender == game.playerW) {
+            // P1 resigned, P2 wins
+            game.status = 3;
+            if (prize > 0) {
+                if (game.isNative) {
+                    payable(game.playerB).transfer(prize);
