@@ -317,3 +317,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: game id increments sequentially
 // test: initial board state is correct
 // test: initial turn is w
+// test: initial status is u0 Waiting
