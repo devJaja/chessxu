@@ -100,3 +100,9 @@ contract StackChess {
         Game storage game = games[gameId];
         if (game.playerW == address(0)) revert GameNotFound();
         if (game.status != 1) revert GameNotActive();
+
+        if (keccak256(abi.encodePacked(game.turn)) == keccak256(abi.encodePacked("w"))) {
+            if (msg.sender != game.playerW) revert NotYourTurn();
+            game.turn = "b";
+        } else {
+            if (msg.sender != game.playerB) revert NotYourTurn();
