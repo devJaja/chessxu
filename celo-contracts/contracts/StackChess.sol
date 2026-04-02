@@ -106,3 +106,9 @@ contract StackChess {
             game.turn = "b";
         } else {
             if (msg.sender != game.playerB) revert NotYourTurn();
+            game.turn = "w";
+        }
+
+        game.boardState = newBoardState;
+    }
+
