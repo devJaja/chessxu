@@ -154,3 +154,9 @@ contract StackChess {
         Game storage game = games[gameId];
         if (game.playerW == address(0)) revert GameNotFound();
         if (game.status != 0 && game.status != 1) revert GameNotActive();
+        if (newStatus < 2 || newStatus > 5) revert InvalidStatus();
+
+        uint256 prize = game.wager * 2;
+        uint256 wager = game.wager;
+
+        if (newStatus == 2) {
