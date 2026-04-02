@@ -315,3 +315,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: create-game returns u1 for STX game
 // test: create-game returns u1 for token game
 // test: game id increments sequentially
+// test: initial board state is correct
