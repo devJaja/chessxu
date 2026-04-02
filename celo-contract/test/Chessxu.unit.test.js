@@ -419,3 +419,5 @@ describe("Chessxu – Unit Tests", function () {
 // test: zero-address token deploy
 
 // test: createGame zero wager
+
+// test: createGame native wager holds ETH
