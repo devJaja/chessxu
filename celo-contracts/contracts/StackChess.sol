@@ -136,3 +136,9 @@ contract StackChess {
                 }
             }
         } else {
+            // P2 resigned, P1 wins
+            game.status = 2;
+            if (prize > 0) {
+                if (game.isNative) {
+                    payable(game.playerW).transfer(prize);
+                } else {
