@@ -10,3 +10,9 @@ contract StackChess {
     address public owner;
 
     uint256 public nextGameId = 1;
+
+    struct Game {
+        address playerW;
+        address playerB;
+        uint256 wager;
+        bool isNative;
