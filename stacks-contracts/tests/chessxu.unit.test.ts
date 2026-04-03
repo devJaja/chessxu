@@ -320,3 +320,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: initial status is u0 Waiting
 // test: player-w set, player-b is none
 // test: STX wager locked in contract
+// test: token wager locked in contract
