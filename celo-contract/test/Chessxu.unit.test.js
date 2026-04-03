@@ -433,3 +433,5 @@ describe("Chessxu – Unit Tests", function () {
 // test: createGame token wager holds tokens
 
 // test: createGame no allowance revert
+
+// test: joinGame sets playerB and status
