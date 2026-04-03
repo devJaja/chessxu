@@ -321,3 +321,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: player-w set, player-b is none
 // test: STX wager locked in contract
 // test: token wager locked in contract
+// test: revert on insufficient STX balance
