@@ -323,3 +323,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: token wager locked in contract
 // test: revert on insufficient STX balance
 // test: join-game err-game-not-found
+// test: join-game success sets player-b and status
