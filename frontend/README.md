@@ -1,6 +1,6 @@
-# Stackchess Frontend
+# Chessxu Frontend
 
-This is the React-based chess interface for Stackchess, now integrated with the Stacks blockchain.
+This is the React-based chess interface for Chessxu, integrated with the Stacks and Celo blockchains.
 
 ## Features
 - **PvP Matchmaking**: Stake STX or CHESS tokens to challenge other players.
