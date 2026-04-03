@@ -431,3 +431,5 @@ describe("Chessxu – Unit Tests", function () {
 // test: createGame ETH sent for token game revert
 
 // test: createGame token wager holds tokens
+
+// test: createGame no allowance revert
