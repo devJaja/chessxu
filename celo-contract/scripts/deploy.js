@@ -9,7 +9,7 @@ dotenv.config();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 async function main() {
-    const artifactPath = join(__dirname, "../artifacts/contracts/StackChess.sol/StackChess.json");
+    const artifactPath = join(__dirname, "../artifacts/contracts/Chessxu.sol/Chessxu.json");
     if (!fs.existsSync(artifactPath)) {
         console.error("Artifact not found. Did you compile?");
         process.exit(1);
@@ -36,7 +36,7 @@ async function main() {
     await contract.waitForDeployment();
     
     const targetAddress = await contract.getAddress();
-    console.log(`StackChess successfully deployed to Alfajores at: ${targetAddress}`);
+    console.log(`Chessxu successfully deployed to Mainnet at: ${targetAddress}`);
 }
 
 main().catch(err => {
