@@ -325,3 +325,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: join-game err-game-not-found
 // test: join-game success sets player-b and status
 // test: join-game err-already-joined
+// test: join-game err-not-waiting
