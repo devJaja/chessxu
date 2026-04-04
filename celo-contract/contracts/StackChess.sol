@@ -6,7 +6,7 @@ interface IERC20 {
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
 }
 
-contract StackChess {
+contract Chessxu {
     address public owner;
 
     uint256 public nextGameId = 1;
