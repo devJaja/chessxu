@@ -324,3 +324,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: revert on insufficient STX balance
 // test: join-game err-game-not-found
 // test: join-game success sets player-b and status
+// test: join-game err-already-joined
