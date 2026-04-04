@@ -327,3 +327,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: join-game err-already-joined
 // test: join-game err-not-waiting
 // test: submit-move turn alternation
+// test: submit-move err-not-your-turn
