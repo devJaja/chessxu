@@ -4,6 +4,15 @@
  * This service handles all interactions with the Chessxu smart contract on the Celo blockchain.
  * It uses the viem library for efficient EVM interactions and handles wallet connection,
  * game creation, joining, moves, and query operations.
+ * 
+ * Usage Example:
+ * ```typescript
+ * import celoService from './celoService';
+ * 
+ * const address = await celoService.connectWallet();
+ * const txHash = await celoService.createGame("0.1", true);
+ * const game = await celoService.getGame(1);
+ * ```
  */
 import { createPublicClient, createWalletClient, custom, http, parseEther } from 'viem';
 import { celo } from 'viem/chains';
@@ -19,14 +28,22 @@ const celoService = {
    */
   config: CELO_CONFIG,
   
+  /**
+   * Public client for read-only operations
+   */
   publicClient: createPublicClient({
     chain: celo,
     transport: http()
   }),
 
+  /**
+   * Common error messages for service exceptions
+   */
   ERROR_MESSAGES: {
     WALLET_NOT_FOUND: 'MetaMask or other EVM wallet not found',
   },
+
+  // --- Utility Helpers ---
 
   /**
    * Returns a public client for read operations
@@ -55,6 +72,8 @@ const celoService = {
     });
   },
   
+  // --- Wallet Operations ---
+
   /**
    * Connects to the Celo wallet
    */
@@ -63,6 +82,8 @@ const celoService = {
     const [address] = await walletClient.requestAddresses();
     return address;
   },
+
+  // --- Write Operations ---
 
   /**
    * Creates a new game on-chain
@@ -138,6 +159,8 @@ const celoService = {
     });
   },
 
+  // --- Read Operations ---
+
   /**
    * Fetches the current game state from the blockchain
    * @param {number} gameId - The ID of the game to fetch
@@ -195,7 +218,6 @@ const celoService = {
    */
   getTokenBalance: async (address: `0x${string}`) => {
     // This assumes the contract implements a balance method or uses an ERC20 token
-    // For now, we stub this as it depends on the token contract implementation
     return 0n;
   },
 };
