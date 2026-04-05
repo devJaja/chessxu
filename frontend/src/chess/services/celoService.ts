@@ -9,6 +9,11 @@ import { CHESSXU_ABI } from './contractAbi';
 const celoService = {
   config: CELO_CONFIG,
   
+  publicClient: createPublicClient({
+    chain: celo,
+    transport: http()
+  }),
+  
   /**
    * Connects to the Celo wallet
    */
@@ -135,7 +140,18 @@ const celoService = {
    * Fetches the last game ID from the contract
    */
   getLastGameId: async () => {
-    // Implementation pending
+    const publicClient = createPublicClient({
+      chain: celo,
+      transport: http()
+    });
+
+    const result = await publicClient.readContract({
+      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      abi: CHESSXU_ABI,
+      functionName: 'getLastGameId',
+    });
+    
+    return Number(result);
   },
 };
 
