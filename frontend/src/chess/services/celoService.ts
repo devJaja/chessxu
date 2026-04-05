@@ -31,7 +31,8 @@ import {
   custom, 
   http, 
   parseEther, 
-  formatEther 
+  formatEther,
+  hexToBigInt
 } from 'viem';
 import { celo } from 'viem/chains';
 import { CELO_CONFIG } from '../blockchainConstants';
@@ -88,6 +89,14 @@ const celoService = {
       chain: celo,
       transport: custom((window as any).ethereum)
     });
+  },
+  
+  /**
+   * Converts a hex string to a BigInt
+   * @param {string} hex - The hex string to convert
+   */
+  hexToBigInt: (hex: string) => {
+    return hexToBigInt(hex as `0x${string}`);
   },
   
   // --- Wallet Operations ---
