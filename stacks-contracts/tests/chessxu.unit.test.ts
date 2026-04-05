@@ -328,3 +328,4 @@ describe("chessxu unit – read-only functions", () => {
 // test: join-game err-not-waiting
 // test: submit-move turn alternation
 // test: submit-move err-not-your-turn
+// test: resign payout and status
