@@ -5,12 +5,23 @@
  * It uses the viem library for efficient EVM interactions and handles wallet connection,
  * game creation, joining, moves, and query operations.
  * 
- * Usage Example:
+ * @example
  * ```typescript
  * import celoService from './celoService';
  * 
+ * // 1. Connect wallet
  * const address = await celoService.connectWallet();
+ * 
+ * // 2. Create a new game with 0.1 CELO wager
  * const txHash = await celoService.createGame("0.1", true);
+ * 
+ * // 3. Join an existing game
+ * await celoService.joinGame(1, "0.1", true);
+ * 
+ * // 4. Submit a move (FEN string)
+ * await celoService.submitMove(1, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+ * 
+ * // 5. Get game state
  * const game = await celoService.getGame(1);
  * ```
  */
