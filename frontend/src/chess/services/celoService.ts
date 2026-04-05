@@ -143,7 +143,7 @@ const celoService = {
    * @param {number} gameId - The ID of the game to fetch
    */
   getGame: async (gameId: number) => {
-    return await celoService.publicClient.readContract({
+    return await celoService.getPublicClient().readContract({
       address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'getGame',
@@ -163,7 +163,7 @@ const celoService = {
    * Fetches the last game ID from the contract
    */
   getLastGameId: async () => {
-    const result = await celoService.publicClient.readContract({
+    const result = await celoService.getPublicClient().readContract({
       address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'getLastGameId',
@@ -186,7 +186,7 @@ const celoService = {
    * @param {string} address - The wallet address
    */
   getNativeBalance: async (address: `0x${string}`) => {
-    return await celoService.publicClient.getBalance({ address });
+    return await celoService.getPublicClient().getBalance({ address });
   },
 
   /**
