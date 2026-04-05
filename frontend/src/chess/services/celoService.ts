@@ -13,6 +13,13 @@ const celoService = {
     chain: celo,
     transport: http()
   }),
+
+  /**
+   * Returns the contract address as a type-safe hex string
+   */
+  getContractAddress: () => {
+    return CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`;
+  },
   
   /**
    * Connects to the Celo wallet
@@ -45,7 +52,7 @@ const celoService = {
     const [address] = await walletClient.requestAddresses();
     
     return await walletClient.writeContract({
-      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'createGame',
       args: [BigInt(parseEther(wagerInEth)), isNative],
@@ -68,7 +75,7 @@ const celoService = {
     const [address] = await walletClient.requestAddresses();
 
     return await walletClient.writeContract({
-      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'joinGame',
       args: [BigInt(gameId)],
@@ -90,7 +97,7 @@ const celoService = {
     const [address] = await walletClient.requestAddresses();
 
     return await walletClient.writeContract({
-      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'submitMove',
       args: [BigInt(gameId), "", boardState],
@@ -110,7 +117,7 @@ const celoService = {
     const [address] = await walletClient.requestAddresses();
 
     return await walletClient.writeContract({
-      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'resign',
       args: [BigInt(gameId)],
@@ -124,7 +131,7 @@ const celoService = {
    */
   getGame: async (gameId: number) => {
     return await celoService.publicClient.readContract({
-      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'getGame',
       args: [BigInt(gameId)],
@@ -144,7 +151,7 @@ const celoService = {
    */
   getLastGameId: async () => {
     const result = await celoService.publicClient.readContract({
-      address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
+      address: celoService.getContractAddress(),
       abi: CHESSXU_ABI,
       functionName: 'getLastGameId',
     });
