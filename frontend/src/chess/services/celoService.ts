@@ -173,6 +173,14 @@ const celoService = {
     const game = await celoService.getGame(gameId) as any;
     return game.isNative;
   },
+
+  /**
+   * Returns the native CELO balance of an address
+   * @param {string} address - The wallet address
+   */
+  getNativeBalance: async (address: `0x${string}`) => {
+    return await celoService.publicClient.getBalance({ address });
+  },
 };
 
 export default celoService;
