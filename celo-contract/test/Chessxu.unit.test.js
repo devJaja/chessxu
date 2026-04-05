@@ -445,3 +445,5 @@ describe("Chessxu – Unit Tests", function () {
 // test: submitMove NotYourTurn revert
 
 // test: resign payout and status
+
+// test: resolveGame owner-only access and payout
