@@ -1,4 +1,4 @@
-import { DEFAULT_ELO, ELO_K_FACTOR } from '../stacksConstants';
+import { DEFAULT_ELO, ELO_K_FACTOR } from '../blockchainConstants';
 
 /**
  * Mirrors the on-chain ELO calculation for client-side preview.

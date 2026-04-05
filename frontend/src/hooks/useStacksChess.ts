@@ -12,7 +12,7 @@ import useAppStore from '../zustand/store';
 import { useToaster } from '../components/ui/toasts/ToasterProvider';
 
 const CONTRACT_ADDRESS = 'SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B';
-const CONTRACT_NAME = 'stackchess';
+const CONTRACT_NAME = 'chessxu';
 
 export const useStacksChess = () => {
   const address = useAppStore((state) => state.address);

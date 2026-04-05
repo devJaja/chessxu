@@ -14,7 +14,7 @@ Welcome to **Chessxu**, a fully decentralized chess application built on the Sta
 The repository is organized into a monorepo containing both the frontend web application and the Clarity smart contracts.
 
 ```text
-stackchess/
+chessxu/
 ├── frontend/          # React + Vite web application
 ├── stacks-contracts/  # Clarinet project with Stacks smart contracts
 └── celo-contracts/    # Hardhat project with Celo smart contracts (EVM)
@@ -29,8 +29,8 @@ stackchess/
 The frontend is a modern React application powered by Vite, providing the chess logic, UI, and Stacks wallet integration.
 
 ```bash
-git clone https://github.com/morelucks/stackchess.git
-cd stackchess/frontend
+git clone https://github.com/morelucks/chessxu.git
+cd chessxu/frontend
 
 # Install dependencies
 npm install
@@ -43,10 +43,10 @@ Your client will be running locally at `http://localhost:5173` with optimistic u
 
 ### 2. Developing the Smart Contract
 
-The core game logic and STX wagering system are managed by a Clarity smart contract (`stackchess.clar`). You need [Clarinet](https://github.com/hirosystems/clarinet) installed to interact with it.
+The core game logic and STX wagering system are managed by a Clarity smart contract (`chessxu.clar`). You need [Clarinet](https://github.com/hirosystems/clarinet) installed to interact with it.
 
 ```bash
-cd stackchess/stacks-contracts
+cd chessxu/stacks-contracts
 
 # Check the syntax of the Clarity contracts
 clarinet check
@@ -97,8 +97,8 @@ All contracts are deployed on the Stacks mainnet under the deployer address `SP3
 | Contract | Address | Explorer |
 |---|---|---|
 | **SIP-010 Trait** | `SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B.sip-010-trait-ft-standard` | [View](https://explorer.hiro.so/txid/cbf387e01ae4a2965a50c3c44c04497e21f1c68623fa63b125b217f70352a97b?chain=mainnet) |
-| **Chessxu Token (CHESS)** | `SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B.stackchess-token` | [View](https://explorer.hiro.so/txid/36f62fb1a2a2010e00b70f6bcdbb9759d205e0b00229015a5127101716fab913?chain=mainnet) |
-| **Chessxu Game** | `SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B.stackchess` | [View](https://explorer.hiro.so/txid/0a9a3a2ee47d249797cbb79560436a6ea8b114b0be293ad11d83df519c11211f?chain=mainnet) |
+| **Chessxu Token (CHESS)** | `SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B.chessxu-token` | [View](https://explorer.hiro.so/txid/36f62fb1a2a2010e00b70f6bcdbb9759d205e0b00229015a5127101716fab913?chain=mainnet) |
+| **Chessxu Game** | `SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B.chessxu` | [View](https://explorer.hiro.so/txid/0a9a3a2ee47d249797cbb79560436a6ea8b114b0be293ad11d83df519c11211f?chain=mainnet) |
 
 ---
 

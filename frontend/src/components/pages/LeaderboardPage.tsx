@@ -8,7 +8,7 @@ export default function LeaderboardPage() {
   return (
     <div className="lb-page">
       <div className="lb-page__inner">
-        <h1 className="lb-page__title">Stackchess Leaderboard</h1>
+        <h1 className="lb-page__title">Chessxu Leaderboard</h1>
         {globalStats && (
           <div className="lb-page__global">
             <div className="lb-page__stat">

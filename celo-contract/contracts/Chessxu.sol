@@ -24,7 +24,7 @@ contract Chessxu {
     mapping(uint256 => Game) public games;
 
     // Optional Token (for token wagers)
-    IERC20 public stackchessToken;
+    IERC20 public chessxuToken;
 
     // Errors
     error NotOwner();
@@ -41,7 +41,7 @@ contract Chessxu {
     constructor(address _tokenAddress) {
         owner = msg.sender;
         if (_tokenAddress != address(0)) {
-            stackchessToken = IERC20(_tokenAddress);
+            chessxuToken = IERC20(_tokenAddress);
         }
     }
 
@@ -55,7 +55,7 @@ contract Chessxu {
         } else {
             if (msg.value > 0) revert InvalidWager();
             if (wager > 0) {
-                bool success = stackchessToken.transferFrom(msg.sender, address(this), wager);
+                bool success = chessxuToken.transferFrom(msg.sender, address(this), wager);
                 if (!success) revert TransferFailed();
             }
         }
@@ -87,7 +87,7 @@ contract Chessxu {
         } else {
             if (msg.value > 0) revert InvalidWager();
             if (game.wager > 0) {
-                bool success = stackchessToken.transferFrom(msg.sender, address(this), game.wager);
+                bool success = chessxuToken.transferFrom(msg.sender, address(this), game.wager);
                 if (!success) revert TransferFailed();
             }
         }
@@ -131,7 +131,7 @@ contract Chessxu {
                 if (game.isNative) {
                     payable(game.playerB).transfer(prize);
                 } else {
-                    bool success = stackchessToken.transfer(game.playerB, prize);
+                    bool success = chessxuToken.transfer(game.playerB, prize);
                     if (!success) revert TransferFailed();
                 }
             }
@@ -142,7 +142,7 @@ contract Chessxu {
                 if (game.isNative) {
                     payable(game.playerW).transfer(prize);
                 } else {
-                    bool success = stackchessToken.transfer(game.playerW, prize);
+                    bool success = chessxuToken.transfer(game.playerW, prize);
                     if (!success) revert TransferFailed();
                 }
             }
@@ -165,7 +165,7 @@ contract Chessxu {
                 if (prize > 0) payable(game.playerW).transfer(prize);
             } else {
                 if (prize > 0) {
-                    bool success = stackchessToken.transfer(game.playerW, prize);
+                    bool success = chessxuToken.transfer(game.playerW, prize);
                     if (!success) revert TransferFailed();
                 }
             }
@@ -175,7 +175,7 @@ contract Chessxu {
                 if (game.isNative) {
                     payable(game.playerB).transfer(prize);
                 } else {
-                    bool success = stackchessToken.transfer(game.playerB, prize);
+                    bool success = chessxuToken.transfer(game.playerB, prize);
                     if (!success) revert TransferFailed();
                 }
             }
@@ -190,11 +190,11 @@ contract Chessxu {
                 }
             } else {
                 if (wager > 0) {
-                    bool curSuccess = stackchessToken.transfer(game.playerW, wager);
+                    bool curSuccess = chessxuToken.transfer(game.playerW, wager);
                     if (!curSuccess) revert TransferFailed();
 
                     if (game.playerB != address(0)) {
-                        bool successB = stackchessToken.transfer(game.playerB, wager);
+                        bool successB = chessxuToken.transfer(game.playerB, wager);
                         if (!successB) revert TransferFailed();
                     }
                 }

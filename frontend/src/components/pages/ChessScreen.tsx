@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAppStore from "../../zustand/store";
 import { useWalletAuth } from "../../hooks/useWalletAuth";
 import { useGameState } from "../../chess/hooks/useGameState";
-import { GAME_STATUS } from "../../chess/stacksConstants";
+import { GAME_STATUS } from "../../chess/blockchainConstants";
 
 function getStatusLabel(status: number | null | undefined) {
   switch (status) {

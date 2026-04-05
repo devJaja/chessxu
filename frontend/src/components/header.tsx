@@ -13,7 +13,7 @@ export function Header() {
   const handleConnect = () => {
     showConnect({
       appDetails: {
-        name: "Stackchess",
+        name: "Chessxu",
         icon: window.location.origin + "/favicon.ico",
       },
       onFinish: () => {
@@ -86,7 +86,7 @@ export function Header() {
           leading-tight tracking-tight
         "
       >
-        Stackchess
+        Chessxu
       </h1>
       <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto px-4 font-medium">
         Onchain Chess with STX Wagers on{" "}

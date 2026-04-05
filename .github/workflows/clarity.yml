@@ -12,5 +12,5 @@ jobs:
           clarinet-version: '2.11.0'
       - name: Clarinet Check
         run: |
-          cd contract
+          cd stacks-contracts
           clarinet check

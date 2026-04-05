@@ -1,14 +1,16 @@
 {
-  "name": "celo-contracts",
+  "name": "chessxu-contracts",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "deploy": "node scripts/deploy.js",
+    "interact": "node scripts/interact.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["celo", "chess", "onchain"],
+  "author": "morelucks",
+  "license": "MIT",
+  "description": "Celo smart contracts and interaction scripts for Chessxu.",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^7.0.0",
     "dotenv": "^17.3.1",

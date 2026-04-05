@@ -49,7 +49,7 @@ const useAppStore = create<AppStore>()(
       },
     }),
     {
-      name: 'stackchess-storage',
+      name: 'chessxu-storage',
     }
   )
 );

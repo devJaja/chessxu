@@ -1,9 +1,9 @@
-export const STACKCHESS_DEPLOYER = "SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B";
+export const CHESSXU_DEPLOYER = "SP34MN3DMM07BNAWYJSHTS4B08T8JRVK8AT810X1B";
 
 export const CONTRACTS = {
-  TRAIT: `${STACKCHESS_DEPLOYER}.sip-010-trait-ft-standard`,
-  TOKEN: `${STACKCHESS_DEPLOYER}.stackchess-token`,
-  GAME: `${STACKCHESS_DEPLOYER}.stackchess`,
+  TRAIT: `${CHESSXU_DEPLOYER}.sip-010-trait-ft-standard`,
+  TOKEN: `${CHESSXU_DEPLOYER}.chessxu-token`,
+  GAME: `${CHESSXU_DEPLOYER}.chessxu`,
 };
 
 export const ERRORS = {

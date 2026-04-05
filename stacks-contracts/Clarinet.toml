@@ -5,8 +5,8 @@ authors = []
 telemetry = false
 cache_dir = './.cache'
 requirements = []
-[contracts.stackchess]
-path = 'contracts/stackchess.clar'
+[contracts.chessxu]
+path = 'contracts/chessxu.clar'
 clarity_version = 2
 epoch = 'latest'
 [repl.analysis]
@@ -29,12 +29,12 @@ path = 'contracts/sip-010-trait-ft-standard.clar'
 clarity_version = 2
 epoch = 2.1
 
-[contracts.stackchess-token]
-path = 'contracts/stackchess-token.clar'
+[contracts.chessxu-token]
+path = 'contracts/chessxu-token.clar'
 clarity_version = 2
 epoch = 2.1
 
-[contracts.stackchess-leaderboard]
-path = 'contracts/stackchess-leaderboard.clar'
+[contracts.chessxu-leaderboard]
+path = 'contracts/chessxu-leaderboard.clar'
 clarity_version = 2
 epoch = 2.1

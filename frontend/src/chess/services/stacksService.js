@@ -10,7 +10,7 @@ import {
   principalCV,
   fetchCallReadOnlyFunction,
 } from '@stacks/transactions';
-import { NETWORK, CONTRACTS, STACKCHESS_DEPLOYER } from '../stacksConstants';
+import { NETWORK, CONTRACTS, CHESSXU_DEPLOYER } from '../blockchainConstants';
 
 const network = NETWORK === 'mainnet' ? STACKS_MAINNET : STACKS_TESTNET;
 
@@ -28,7 +28,7 @@ const stacksService = {
   network,
   isMainnet: NETWORK === 'mainnet',
   appDetails: {
-    name: 'Stackchess',
+    name: 'Chessxu',
     icon: window.location.origin + '/vite.svg',
   },
   
@@ -127,7 +127,7 @@ const stacksService = {
         functionName: 'get-last-game-id',
         functionArgs: [],
         network,
-        senderAddress: STACKCHESS_DEPLOYER,
+        senderAddress: CHESSXU_DEPLOYER,
       });
       return Number(cvToValue(response));
     } catch (error) {
@@ -170,7 +170,7 @@ const stacksService = {
         functionName: 'get-game',
         functionArgs: [uintCV(gameId)],
         network,
-        senderAddress: STACKCHESS_DEPLOYER,
+        senderAddress: CHESSXU_DEPLOYER,
       });
       
       return cvToValue(response).value;
@@ -194,7 +194,7 @@ const stacksService = {
         functionName: 'get-player-stats',
         functionArgs: [principalCV(playerAddress)],
         network,
-        senderAddress: STACKCHESS_DEPLOYER,
+        senderAddress: CHESSXU_DEPLOYER,
       });
       const val = cvToValue(response);
       return val ? val.value : null;
@@ -218,7 +218,7 @@ const stacksService = {
         functionName: 'get-player-elo',
         functionArgs: [principalCV(playerAddress)],
         network,
-        senderAddress: STACKCHESS_DEPLOYER,
+        senderAddress: CHESSXU_DEPLOYER,
       });
       return Number(cvToValue(response));
     } catch (error) {
@@ -240,7 +240,7 @@ const stacksService = {
         functionName: 'get-global-stats',
         functionArgs: [],
         network,
-        senderAddress: STACKCHESS_DEPLOYER,
+        senderAddress: CHESSXU_DEPLOYER,
       });
       return cvToValue(response);
     } catch (error) {
@@ -264,7 +264,7 @@ const stacksService = {
         functionName: 'get-expected-score',
         functionArgs: [principalCV(playerA), principalCV(playerB)],
         network,
-        senderAddress: STACKCHESS_DEPLOYER,
+        senderAddress: CHESSXU_DEPLOYER,
       });
       return Number(cvToValue(response));
     } catch (error) {

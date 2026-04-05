@@ -1,9 +1,9 @@
-;; Stackchess Token (CHESS)
+;; Chessxu Token (CHESS)
 ;; SIP-010 Compliant Fungible Token
 
 (impl-trait .sip-010-trait-ft-standard.sip-010-trait)
 
-(define-fungible-token stackchess-token)
+(define-fungible-token chessxu-token)
 
 ;; Constants
 (define-constant contract-owner tx-sender)
@@ -12,7 +12,7 @@
 
 ;; Token Information
 (define-read-only (get-name)
-    (ok "Stackchess Token")
+    (ok "Chessxu Token")
 )
 
 (define-read-only (get-symbol)
@@ -24,11 +24,11 @@
 )
 
 (define-read-only (get-balance (account principal))
-    (ok (ft-get-balance stackchess-token account))
+    (ok (ft-get-balance chessxu-token account))
 )
 
 (define-read-only (get-total-supply)
-    (ok (ft-get-supply stackchess-token))
+    (ok (ft-get-supply chessxu-token))
 )
 
 (define-read-only (get-token-uri)
@@ -39,7 +39,7 @@
 (define-public (transfer (amount uint) (sender principal) (recipient principal) (memo (optional (buff 34))))
     (begin
         (asserts! (is-eq tx-sender sender) err-not-token-owner)
-        (try! (ft-transfer? stackchess-token amount sender recipient))
+        (try! (ft-transfer? chessxu-token amount sender recipient))
         (match memo to-print (print to-print) 0x)
         (ok true)
     )
@@ -49,6 +49,6 @@
 (define-public (mint (amount uint) (recipient principal))
     (begin
         (asserts! (is-eq tx-sender contract-owner) err-owner-only)
-        (ft-mint? stackchess-token amount recipient)
+        (ft-mint? chessxu-token amount recipient)
     )
 )

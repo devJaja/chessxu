@@ -1,4 +1,4 @@
-import { GAME_STATUS } from '../chess/stacksConstants';
+import { GAME_STATUS } from '../chess/blockchainConstants';
 import './GameStatusBanner.css';
 
 interface Props {

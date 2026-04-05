@@ -1,7 +1,7 @@
 {
-  "name": "@morelucks/stackchess-sdk",
+  "name": "@morelucks/chessxu-sdk",
   "version": "1.0.0",
-  "description": "SDK for interacting with Stackchess Clarity contracts on Stacks Mainnet",
+  "description": "SDK for interacting with Chessxu Clarity contracts on Stacks Mainnet",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

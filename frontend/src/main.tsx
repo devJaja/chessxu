@@ -12,7 +12,7 @@ createRoot(rootElement).render(
     <Connect
       authOptions={{
         appDetails: {
-          name: "Stackchess",
+          name: "Chessxu",
           icon: window.location.origin + "/logo.png",
         },
         redirectTo: "/",

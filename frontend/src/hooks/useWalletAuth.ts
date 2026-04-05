@@ -33,7 +33,7 @@ export function useWalletAuth() {
 
     showConnect({
       appDetails: {
-        name: "Stackchess",
+        name: "Chessxu",
         icon: window.location.origin + "/favicon.ico",
       },
       onFinish: () => {

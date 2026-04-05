@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import stacksService from '../services/stacksService';
-import { GAME_STATUS } from '../stacksConstants';
+import { GAME_STATUS } from '../blockchainConstants';
 
 /**
  * Hook to poll on-chain game state for a given gameId.

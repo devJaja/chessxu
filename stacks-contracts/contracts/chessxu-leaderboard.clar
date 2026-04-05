@@ -1,12 +1,12 @@
-;; stackchess-leaderboard.clar
-;; On-chain leaderboard for the Stackchess game
+;; chessxu-leaderboard.clar
+;; On-chain leaderboard for the Chessxu game
 ;; Tracks wins, losses, draws, and ELO ratings for each player
 
 ;; Contract owner (deployer)
 (define-constant contract-owner tx-sender)
 
-;; Authorized caller - the main stackchess game contract
-(define-constant stackchess-contract .stackchess)
+;; Authorized caller - the main chessxu game contract
+(define-constant chessxu-contract .chessxu)
 
 ;; Error codes
 (define-constant err-not-authorized     (err u100))
@@ -107,7 +107,7 @@
 ;; Public Match Recording
 ;; ===========================
 
-;; Record a win/loss result. Can only be called by the stackchess game contract.
+;; Record a win/loss result. Can only be called by the chessxu game contract.
 (define-public (record-win (winner principal) (loser principal))
     (let (
         (winner-inited (ensure-player-exists winner))
@@ -120,7 +120,7 @@
         (w-best-streak (if (> w-streak (get best-streak w-stats)) w-streak (get best-streak w-stats)))
     )
         ;; Enforce authorization (only the game contract can report results)
-        (asserts! (is-eq contract-caller stackchess-contract) err-not-authorized)
+        (asserts! (is-eq contract-caller chessxu-contract) err-not-authorized)
         (asserts! (not (is-eq winner loser)) err-same-player)
 
         ;; Update winner
@@ -161,7 +161,7 @@
         (b-stats (unwrap! (map-get? player-stats { player: player-b }) err-player-not-found))
     )
         ;; Enforce authorization
-        (asserts! (is-eq contract-caller stackchess-contract) err-not-authorized)
+        (asserts! (is-eq contract-caller chessxu-contract) err-not-authorized)
         (asserts! (not (is-eq player-a player-b)) err-same-player)
 
         ;; Update Player A
@@ -244,4 +244,3 @@
         (ok true)
     )
 )
-

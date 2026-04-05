@@ -1,5 +1,5 @@
 {
-  "name": "stackchess",
+  "name": "chessxu",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -32,6 +32,7 @@
     "react-router-dom": "^7.9.5",
     "tailwind-merge": "^3.3.1",
     "uuid": "^10.0.0",
+    "viem": "^2.47.10",
     "vite-plugin-top-level-await": "^1.5.0",
     "vite-plugin-wasm": "^3.4.1",
     "zustand": "^4.5.7"
