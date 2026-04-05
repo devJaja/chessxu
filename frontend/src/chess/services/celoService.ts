@@ -132,15 +132,18 @@ const celoService = {
   },
 
   /**
+   * Fetches the current game state (alias for consistency)
+   * @param {number} gameId - The ID of the game to fetch
+   */
+  getGameState: async (gameId: number) => {
+    return await celoService.getGame(gameId);
+  },
+
+  /**
    * Fetches the last game ID from the contract
    */
   getLastGameId: async () => {
-    const publicClient = createPublicClient({
-      chain: celo,
-      transport: http()
-    });
-
-    const result = await publicClient.readContract({
+    const result = await celoService.publicClient.readContract({
       address: CELO_CONFIG.CONTRACT_ADDRESS as `0x${string}`,
       abi: CHESSXU_ABI,
       functionName: 'getLastGameId',
