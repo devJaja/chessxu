@@ -237,4 +237,16 @@ describe("chessxu - join-game", () => {
         expect(game["player-b"].type).toBe("none");
         expect(game["status"]).toStrictEqual(Cl.uint(0));
     });
+
+    it("confirms last-game-id does not advance on a failed join", () => {
+        simnet.callPublicFn("chessxu", "create-game", [Cl.uint(0), Cl.bool(true)], wallet_1); 
+        
+        const preId = (simnet.callReadOnlyFn("chessxu", "get-last-game-id", [], wallet_1).result as any).value;
+        expect(preId).toBe(1n);
+        
+        simnet.callPublicFn("chessxu", "join-game", [Cl.uint(99)], wallet_2);
+        
+        const postId = (simnet.callReadOnlyFn("chessxu", "get-last-game-id", [], wallet_1).result as any).value;
+        expect(postId).toBe(1n);
+    });
 });
