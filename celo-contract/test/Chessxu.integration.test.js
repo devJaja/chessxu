@@ -6,3 +6,5 @@
 // test: create → join → resign white → black wins
 
 // test: create → join → resign black → white wins
+
+// test: owner resolves white wins
