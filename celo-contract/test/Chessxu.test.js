@@ -272,5 +272,24 @@ describe("Chessxu Contract", function () {
       expect(game.turn).to.equal("b");
       expect(game.boardState).to.equal(newBoardState);
     });
+
+    it("Should allow black to submit a move and flip turn to 'w'", async function () {
+      const { chessxu, player1, player2 } = await deployChessxuFixture();
+      
+      await chessxu.connect(player1).createGame(0, true);
+      await chessxu.connect(player2).joinGame(1);
+      
+      // White moves
+      await chessxu.connect(player1).submitMove(1, "e2-e4", "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR");
+      
+      // Black moves
+      const newBoardState = "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR";
+      const tx = await chessxu.connect(player2).submitMove(1, "e7-e5", newBoardState);
+      await tx.wait();
+
+      const game = await chessxu.getGame(1);
+      expect(game.turn).to.equal("w");
+      expect(game.boardState).to.equal(newBoardState);
+    });
   });
 });
