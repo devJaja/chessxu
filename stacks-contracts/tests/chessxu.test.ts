@@ -137,6 +137,25 @@ describe("chessxu - join-game", () => {
         const { result } = simnet.callPublicFn("chessxu", "join-game", [Cl.uint(1)], wallet_2);
         expect(result).toBeOk(Cl.bool(true));
     });
+
+    it("deducts matching CHESS wager from joiner and locks it in the contract", () => {
+        const wager = 100;
+        // Mint tokens to both players
+        simnet.callPublicFn("chessxu-token", "mint", [Cl.uint(1000), Cl.standardPrincipal(wallet_1)], deployer);
+        simnet.callPublicFn("chessxu-token", "mint", [Cl.uint(1000), Cl.standardPrincipal(wallet_2)], deployer);
+        
+        simnet.callPublicFn("chessxu", "create-game", [Cl.uint(wager), Cl.bool(false)], wallet_1);
+        
+        const { events } = simnet.callPublicFn("chessxu", "join-game", [Cl.uint(1)], wallet_2);
+        
+        // We expect a ft-transfer-event from chessxu-token
+        const tokenTransfer = events.find(e => e.event === "ft_transfer_event");
+        expect(tokenTransfer).toBeDefined();
+        const data = tokenTransfer!.data;
+        expect(data.sender).toBe(wallet_2);
+        expect(data.recipient).toBe(`${deployer}.chessxu`);
+        expect(data.amount).toBe(`${wager}`);
+    });
 });
 
 
