@@ -291,5 +291,13 @@ describe("Chessxu Contract", function () {
       expect(game.turn).to.equal("w");
       expect(game.boardState).to.equal(newBoardState);
     });
+
+    it("Should revert if game doesn't exist", async function () {
+      const { chessxu, player1 } = await deployChessxuFixture();
+      
+      await expect(
+        chessxu.connect(player1).submitMove(999, "e2-e4", "dummyState")
+      ).to.be.revertedWithCustomError(chessxu, "GameNotFound");
+    });
   });
 });
