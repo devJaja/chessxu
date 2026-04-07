@@ -10,6 +10,10 @@ contract MockERC20 is IERC20 {
     mapping(address => uint256) public balances;
     mapping(address => mapping(address => uint256)) public allowances;
 
+    function balanceOf(address account) external view returns (uint256) {
+        return balances[account];
+    }
+
     function mint(address to, uint256 amount) external {
         balances[to] += amount;
     }

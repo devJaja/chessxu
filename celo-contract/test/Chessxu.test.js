@@ -100,6 +100,22 @@ describe("Chessxu Contract", function () {
         chessxu.connect(player1).createGame(wager, false, { value: parseEth("0.1") })
       ).to.be.revertedWithCustomError(chessxu, "InvalidWager");
     });
+
+    it("Should create a token-wagered game", async function () {
+      const { chessxu, mockToken, player1, parseEth } = await deployChessxuFixture();
+      const wager = parseEth("100");
+      
+      await mockToken.connect(player1).approve(await chessxu.getAddress(), wager);
+      await chessxu.connect(player1).createGame(wager, false);
+      
+      const game = await chessxu.getGame(1);
+      expect(game.playerW).to.equal(player1.address);
+      expect(game.wager).to.equal(wager);
+      expect(game.isNative).to.be.false;
+      
+      const contractBalance = await mockToken.balanceOf(await chessxu.getAddress());
+      expect(contractBalance).to.equal(wager);
+    });
   });
 
   describe("joinGame", function () {
