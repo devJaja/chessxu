@@ -224,6 +224,37 @@ describe("Chessxu Contract", function () {
         chessxu.connect(player2).joinGame(1, { value: parseEth("0.4") })
       ).to.be.revertedWithCustomError(chessxu, "InvalidWager");
     });
+
+    it("Should join a token-wagered game", async function () {
+      const { chessxu, mockToken, player1, player2, parseEth } = await deployChessxuFixture();
+      const wager = parseEth("100");
+      
+      await mockToken.connect(player1).approve(await chessxu.getAddress(), wager);
+      await chessxu.connect(player1).createGame(wager, false);
+      
+      await mockToken.connect(player2).approve(await chessxu.getAddress(), wager);
+      const tx = await chessxu.connect(player2).joinGame(1);
+      await tx.wait();
+      
+      const game = await chessxu.getGame(1);
+      expect(game.playerB).to.equal(player2.address);
+      expect(game.status).to.equal(1);
+      
+      const contractBalance = await mockToken.balanceOf(await chessxu.getAddress());
+      expect(contractBalance).to.equal(parseEth("200")); // Both players' wagers
+    });
+
+    it("Should revert if sending ETH for a token game on join", async function () {
+      const { chessxu, mockToken, player1, player2, parseEth } = await deployChessxuFixture();
+      const wager = parseEth("100");
+      
+      await mockToken.connect(player1).approve(await chessxu.getAddress(), wager);
+      await chessxu.connect(player1).createGame(wager, false);
+      
+      await expect(
+        chessxu.connect(player2).joinGame(1, { value: parseEth("0.1") })
+      ).to.be.revertedWithCustomError(chessxu, "InvalidWager");
+    });
   });
 
   describe("submitMove", function () {
