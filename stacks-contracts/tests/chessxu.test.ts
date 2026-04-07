@@ -249,4 +249,29 @@ describe("chessxu - join-game", () => {
         const postId = (simnet.callReadOnlyFn("chessxu", "get-last-game-id", [], wallet_1).result as any).value;
         expect(postId).toBe(1n);
     });
+
+    it("completes a full integration lifecycle (STX and Token) in one flow", () => {
+        // 1. STX Game
+        simnet.callPublicFn("chessxu", "create-game", [Cl.uint(100), Cl.bool(true)], wallet_1);
+        simnet.callPublicFn("chessxu", "join-game", [Cl.uint(1)], wallet_2);
+        
+        // 2. Token Game
+        // Mint tokens first
+        simnet.callPublicFn("chessxu-token", "mint", [Cl.uint(500), Cl.principal(wallet_1)], deployer);
+        simnet.callPublicFn("chessxu-token", "mint", [Cl.uint(500), Cl.principal(wallet_3)], deployer);
+        
+        simnet.callPublicFn("chessxu", "create-game", [Cl.uint(500), Cl.bool(false)], wallet_1);
+        simnet.callPublicFn("chessxu", "join-game", [Cl.uint(2)], wallet_3);
+        
+        // Final assertions
+        const g1 = (simnet.callReadOnlyFn("chessxu", "get-game", [Cl.uint(1)], wallet_1).result as any).value;
+        const game1 = g1.data || g1.value;
+        const g2 = (simnet.callReadOnlyFn("chessxu", "get-game", [Cl.uint(2)], wallet_1).result as any).value;
+        const game2 = g2.data || g2.value;
+        
+        expect(game1["status"]).toStrictEqual(Cl.uint(1));
+        expect(game2["status"]).toStrictEqual(Cl.uint(1));
+        expect(game1["player-b"].value.value).toBe(wallet_2);
+        expect(game2["player-b"].value.value).toBe(wallet_3);
+    });
 });
