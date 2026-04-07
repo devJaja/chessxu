@@ -125,6 +125,19 @@ describe("Chessxu Contract", function () {
         chessxu.connect(player1).createGame(wager, false)
       ).to.be.revertedWith("Insufficient allowance");
     });
+
+    it("Should create multiple games sequentially and verify IDs", async function () {
+      const { chessxu, player1 } = await deployChessxuFixture();
+      
+      await chessxu.connect(player1).createGame(0, true);
+      expect(await chessxu.getLastGameId()).to.equal(1);
+      
+      await chessxu.connect(player1).createGame(0, true);
+      expect(await chessxu.getLastGameId()).to.equal(2);
+      
+      await chessxu.connect(player1).createGame(0, true);
+      expect(await chessxu.getLastGameId()).to.equal(3);
+    });
   });
 
   describe("joinGame", function () {
