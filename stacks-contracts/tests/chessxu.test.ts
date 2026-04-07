@@ -181,6 +181,15 @@ describe("chessxu - join-game", () => {
         const game = res.data || res.value;
         expect(game["status"]).toStrictEqual(Cl.uint(1)); // Ongoing
     });
+
+    it("reverts if the creator tries to join their own game (err-already-joined)", () => {
+        const wager = 100;
+        const createRes = simnet.callPublicFn("chessxu", "create-game", [Cl.uint(wager), Cl.bool(true)], wallet_1);
+        expect(createRes.result).toBeOk(Cl.uint(1));
+        
+        const { result } = simnet.callPublicFn("chessxu", "join-game", [Cl.uint(1)], wallet_1);
+        expect(result).toBeErr(Cl.uint(104)); // err-already-joined
+    });
 });
 
 
