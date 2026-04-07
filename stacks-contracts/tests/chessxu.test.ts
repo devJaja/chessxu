@@ -223,4 +223,18 @@ describe("chessxu - join-game", () => {
         expect(game["player-b"].value.value).toBe(wallet_2);
         expect(game["status"]).toStrictEqual(Cl.uint(1));
     });
+
+    it("verifies state consistency of an unjoined game", () => {
+        const wager = 200;
+        // Mint tokens first since it's a token wager
+        simnet.callPublicFn("chessxu-token", "mint", [Cl.uint(wager), Cl.principal(wallet_2)], deployer);
+        simnet.callPublicFn("chessxu", "create-game", [Cl.uint(wager), Cl.bool(false)], wallet_2);
+        
+        const res = (simnet.callReadOnlyFn("chessxu", "get-game", [Cl.uint(1)], wallet_1).result as any).value;
+        const game = res.data || res.value;
+        expect(game["is-stx"].type).toBe("false");
+        expect(game["player-w"].value).toBe(wallet_2);
+        expect(game["player-b"].type).toBe("none");
+        expect(game["status"]).toStrictEqual(Cl.uint(0));
+    });
 });
