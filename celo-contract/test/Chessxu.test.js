@@ -116,6 +116,15 @@ describe("Chessxu Contract", function () {
       const contractBalance = await mockToken.balanceOf(await chessxu.getAddress());
       expect(contractBalance).to.equal(wager);
     });
+
+    it("Should revert if token transfer fails (no allowance)", async function () {
+      const { chessxu, player1, parseEth } = await deployChessxuFixture();
+      const wager = parseEth("100");
+      
+      await expect(
+        chessxu.connect(player1).createGame(wager, false)
+      ).to.be.revertedWith("Insufficient allowance");
+    });
   });
 
   describe("joinGame", function () {
