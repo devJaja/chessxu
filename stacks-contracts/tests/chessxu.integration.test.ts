@@ -5,3 +5,4 @@
 // test: black resigns white wins full lifecycle
 // test: owner resolves white wins
 // test: owner resolves black wins
+// test: owner resolves draw refunds both
