@@ -258,6 +258,19 @@ describe("Chessxu Contract", function () {
   });
 
   describe("submitMove", function () {
-    // Tests for submitMove will go here
+    it("Should allow white to submit a move and flip turn to 'b'", async function () {
+      const { chessxu, player1, player2 } = await deployChessxuFixture();
+      
+      await chessxu.connect(player1).createGame(0, true);
+      await chessxu.connect(player2).joinGame(1);
+      
+      const newBoardState = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR";
+      const tx = await chessxu.connect(player1).submitMove(1, "e2-e4", newBoardState);
+      await tx.wait();
+
+      const game = await chessxu.getGame(1);
+      expect(game.turn).to.equal("b");
+      expect(game.boardState).to.equal(newBoardState);
+    });
   });
 });
