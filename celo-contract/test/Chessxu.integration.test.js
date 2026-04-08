@@ -20,3 +20,5 @@
 // test: contract balance zero after token resolution
 
 // test: two concurrent games are independent
+
+// test: resolving game1 does not affect game2
