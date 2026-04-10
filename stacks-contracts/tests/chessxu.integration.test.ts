@@ -18,3 +18,4 @@
 // test: cannot submit move after resolution
 // test: cannot resign after resolution
 // test: multi-move board state integrity
+// test: e2e game with moves and owner resolution
