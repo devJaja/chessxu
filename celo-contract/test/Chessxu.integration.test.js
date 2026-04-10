@@ -34,3 +34,5 @@
 // test: cannot resign after resolution
 
 // test: getLastGameId tracks across many games
+
+// test: multi-move sequence board state integrity
