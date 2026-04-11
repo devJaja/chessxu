@@ -3,12 +3,33 @@ import { Wallet, LogOut, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import useAppStore from "../zustand/store";
 import { userSession } from "../zustand/store";
+import { usePlayerStats } from "../hooks/useLeaderboard";
+import { useStacksChess } from "../hooks/useStacksChess";
+import { useEffect } from "react";
 
 export function Header() {
   const address = useAppStore((s) => s.address);
   const logout = useAppStore((s) => s.logout);
   const setAddress = useAppStore((s) => s.setAddress);
+  const eloFromStore = useAppStore((s) => s.elo);
+  const chessBalanceFromStore = useAppStore((s) => s.chessBalance);
+  const setChessBalance = useAppStore((s) => s.setChessBalance);
+  const setElo = useAppStore((s) => s.setElo);
+
+  const { elo: eloFromHook } = usePlayerStats(address);
+  const { getTokenBalance } = useStacksChess();
+  
   const isAuthenticated = !!address;
+
+  useEffect(() => {
+    if (address) {
+      getTokenBalance(address).then(setChessBalance).catch(() => setChessBalance(0));
+    }
+  }, [address, getTokenBalance, setChessBalance]);
+
+  useEffect(() => {
+    if (eloFromHook) setElo(Number(eloFromHook));
+  }, [eloFromHook, setElo]);
 
   const handleConnect = () => {
     showConnect({
@@ -55,9 +76,11 @@ export function Header() {
         ) : (
           <div className="flex items-center gap-3">
             <div className="flex flex-col items-end hidden md:flex">
-              <span className="text-sm font-bold text-white">Connected</span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-sm font-bold text-white">
                 {address!.slice(0, 6)}...{address!.slice(-4)}
+              </span>
+              <span className="text-xs text-indigo-400 font-bold">
+                ELO: {eloFromStore} | {(chessBalanceFromStore / 1000000).toFixed(2)} CHESS
               </span>
             </div>
             <button

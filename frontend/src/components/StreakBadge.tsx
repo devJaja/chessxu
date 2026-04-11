@@ -1,4 +1,4 @@
-import { usePlayerStats } from '../chess/hooks/useLeaderboard';
+import { usePlayerStats } from '../hooks/useLeaderboard';
 import './StreakBadge.css';
 
 interface Props { address: string; }

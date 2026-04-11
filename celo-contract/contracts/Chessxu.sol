@@ -24,6 +24,7 @@ contract Chessxu {
     mapping(uint256 => Game) public games;
 
     // Optional Token (for token wagers)
+    // NOTE: This was deployed as 'chessxuToken' but rebranded for code consistency.
     IERC20 public chessxuToken;
 
     // Errors

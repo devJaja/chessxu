@@ -1,4 +1,4 @@
-import { useGlobalStats, usePlayerStats, useExpectedScore } from '../chess/hooks/useLeaderboard';
+import { useGlobalStats, usePlayerStats } from '../hooks/useLeaderboard';
 import useAppStore from '../zustand/store';
 import './OnChainLeaderboard.css';
 
@@ -28,6 +28,8 @@ function PlayerRow({ address, rank }: PlayerRowProps) {
       <td>{stats ? String(stats['wins'] ?? 0) : '—'}</td>
       <td>{stats ? String(stats['losses'] ?? 0) : '—'}</td>
       <td>{stats ? String(stats['draws'] ?? 0) : '—'}</td>
+      <td className="lb-streak">{stats ? `🔥 ${stats['streak'] ?? 0}` : '—'}</td>
+      <td className="lb-best">{stats ? `⭐ ${stats['best-streak'] ?? 0}` : '—'}</td>
     </tr>
   );
 }
@@ -35,7 +37,6 @@ function PlayerRow({ address, rank }: PlayerRowProps) {
 export default function OnChainLeaderboard() {
   const { globalStats, loading, refetch } = useGlobalStats();
   const address = useAppStore((s) => s.address);
-  useExpectedScore(address ?? '', address ?? '');
 
   return (
     <div className="onchain-lb">
@@ -61,9 +62,11 @@ export default function OnChainLeaderboard() {
               <th>#</th>
               <th>Address</th>
               <th>ELO</th>
-              <th>W</th>
-              <th>L</th>
-              <th>D</th>
+               <th>W</th>
+               <th>L</th>
+               <th>D</th>
+               <th>Streak</th>
+               <th>Best</th>
             </tr>
           </thead>
           <tbody>

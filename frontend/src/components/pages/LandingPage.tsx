@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Users, Sword } from "lucide-react";
 import { useWalletAuth } from "../../hooks/useWalletAuth";
-import { useOnChainGame } from "../../chess/hooks/useOnChainGame";
+import { useStacksChess } from "../../hooks/useStacksChess";
+import useAppStore from "../../zustand/store";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const { address, isConnected, isConnecting, connect, disconnect } = useWalletAuth();
-  const { createGame, joinGame, activeGameId } = useOnChainGame();
+  const { createGame, joinGame } = useStacksChess();
+  const activeGameId = useAppStore((state) => state.activeGameId);
   const [wager, setWager] = useState("0");
   const [idToJoin, setIdToJoin] = useState("");
   const [shouldNavigateAfterConnect, setShouldNavigateAfterConnect] = useState(false);
@@ -45,15 +47,12 @@ export default function LandingPage() {
     const wagerMicroStx = Number.isFinite(parsedWager) && parsedWager > 0 ? Math.floor(parsedWager * 1_000_000) : 0;
 
     setIsCreatingMatch(true);
-    createGame(
-      wagerMicroStx,
-      true,
-      () => {
+    createGame(wagerMicroStx, true)
+      .then(() => {
         setIsCreatingMatch(false);
         navigate("/chess");
-      },
-      () => setIsCreatingMatch(false),
-    );
+      })
+      .catch(() => setIsCreatingMatch(false));
   };
 
   const handleJoinMatch = () => {
@@ -68,14 +67,14 @@ export default function LandingPage() {
     }
 
     setIsJoiningMatch(true);
-    joinGame(
-      gameId,
-      () => {
+    // On landing page, we'll assume 0 wager for joining if not checked, 
+    // or let the contract call handle it. Simplified for landing page.
+    joinGame(gameId, 0, true)
+      .then(() => {
         setIsJoiningMatch(false);
         navigate("/chess");
-      },
-      () => setIsJoiningMatch(false),
-    );
+      })
+      .catch(() => setIsJoiningMatch(false));
   };
 
   return (

@@ -21,11 +21,12 @@ async function main() {
     const rpcUrl = "https://forno.celo.org";
     const provider = new ethers.JsonRpcProvider(rpcUrl);
     
-    if (!process.env.MAINNET_PRIVATE_KEY) {
-        throw new Error("Missing MAINNET_PRIVATE_KEY in .env");
+    const pk = process.env.MAINNET_PRIVATE_KEY2 || process.env.MAINNET_PRIVATE_KEY;
+    if (!pk) {
+        throw new Error("Missing MAINNET_PRIVATE_KEY or MAINNET_PRIVATE_KEY2 in .env");
     }
 
-    const wallet = new ethers.Wallet(process.env.MAINNET_PRIVATE_KEY, provider);
+    const wallet = new ethers.Wallet(pk, provider);
 
     console.log(`Deploying from account: ${wallet.address}`);
 
