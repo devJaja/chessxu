@@ -12,7 +12,7 @@ import {
 import { STACKS_MAINNET, STACKS_TESTNET } from '@stacks/network';
 import useAppStore from '../zustand/store';
 import { useToaster } from '../components/ui/toasts/ToasterProvider';
-import { CONTRACTS, NETWORK } from '../chess/blockchainConstants';
+import { CONTRACTS, NETWORK, CLARITY_ERRORS, LEADERBOARD_ERRORS } from '../chess/blockchainConstants';
 
 const [CONTRACT_ADDRESS, CONTRACT_NAME] = CONTRACTS.GAME.split('.');
 const [TOKEN_ADDRESS, TOKEN_NAME] = CONTRACTS.TOKEN.split('.');
@@ -385,6 +385,8 @@ export const useStacksChess = () => {
     isMyTurn,
     getOpponentAddress,
     getWinProbability,
-    formatElo
+    formatElo,
+    handleContractError,
+    resolveGame
   };
 };
