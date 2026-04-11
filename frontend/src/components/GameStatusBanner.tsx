@@ -1,4 +1,5 @@
 import { GAME_STATUS } from '../chess/blockchainConstants';
+import { useStacksChess } from '../hooks/useStacksChess';
 import './GameStatusBanner.css';
 
 interface Props {
@@ -6,19 +7,11 @@ interface Props {
   gameId: number | null;
 }
 
-const STATUS_LABELS: Record<number, string> = {
-  [GAME_STATUS.WAITING]:    '⏳ Waiting for opponent...',
-  [GAME_STATUS.ONGOING]:    '♟ Game in progress',
-  [GAME_STATUS.WHITE_WINS]: '🏆 White wins',
-  [GAME_STATUS.BLACK_WINS]: '🏆 Black wins',
-  [GAME_STATUS.DRAW]:       '🤝 Draw',
-  [GAME_STATUS.CANCELLED]:  '❌ Game cancelled',
-};
-
 export default function GameStatusBanner({ status, gameId }: Props) {
+  const { getGameStatusString } = useStacksChess();
   if (status === null || gameId === null) return null;
 
-  const label = STATUS_LABELS[status] ?? 'Unknown status';
+  const label = getGameStatusString(status);
   const isActive = status === GAME_STATUS.WAITING || status === GAME_STATUS.ONGOING;
 
   return (
