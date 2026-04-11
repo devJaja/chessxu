@@ -13,6 +13,8 @@ import { useToaster } from '../components/ui/toasts/ToasterProvider';
 import { CONTRACTS, NETWORK } from '../chess/blockchainConstants';
 
 const [CONTRACT_ADDRESS, CONTRACT_NAME] = CONTRACTS.GAME.split('.');
+const [TOKEN_ADDRESS, TOKEN_NAME] = CONTRACTS.TOKEN.split('.');
+const [LEADERBOARD_ADDRESS, LEADERBOARD_NAME] = CONTRACTS.LEADERBOARD.split('.');
 
 export const useStacksChess = () => {
   const address = useAppStore((state) => state.address);
