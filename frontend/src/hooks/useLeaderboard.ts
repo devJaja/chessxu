@@ -28,6 +28,8 @@ export function usePlayerStats(address: string | null) {
 
   useEffect(() => {
     fetch();
+    const interval = setInterval(fetch, 60000);
+    return () => clearInterval(interval);
   }, [fetch]);
 
   return { stats, elo, loading, error, refetch: fetch };
@@ -54,6 +56,8 @@ export function useGlobalStats() {
 
   useEffect(() => {
     fetch();
+    const interval = setInterval(fetch, 60000);
+    return () => clearInterval(interval);
   }, [fetch]);
 
   return { globalStats, loading, error, refetch: fetch };
