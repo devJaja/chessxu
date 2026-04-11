@@ -3,7 +3,8 @@ import { useAppContext } from '../../../contexts/Context';
 import { setupNewGame } from '../../../reducer/actions/game';
 import { saveStakeData, getDummyBalance, resetDummyBalance } from '../../../helper/stakeStorage';
 import { winProbabilityPercent, projectEloAfterWin } from '../../../utils/eloUtils';
-import { useOnChainGame } from '../../../hooks/useOnChainGame';
+import { useStacksChess } from '../../../hooks/useStacksChess';
+import useAppStore from '../../../../zustand/store';
 import './StakingModal.css';
 
 const StakingModal = ({ onClosePopup }) => {
