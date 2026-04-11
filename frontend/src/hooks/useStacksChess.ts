@@ -303,6 +303,9 @@ export const useStacksChess = () => {
     });
   };
 
+  const isPlayerWhite = (game: any, playerAddress: string) => game?.['player-w'] === playerAddress;
+  const isPlayerBlack = (game: any, playerAddress: string) => game?.['player-b']?.value === playerAddress;
+
   return { 
     address, 
     network, 
@@ -317,6 +320,8 @@ export const useStacksChess = () => {
     getPlayerElo,
     getGlobalStats,
     getExpectedScore,
-    resolveGame
+    resolveGame,
+    isPlayerWhite,
+    isPlayerBlack
   };
 };
