@@ -7,7 +7,15 @@ export default function JoinGameModal({ onClose }: Props) {
   const [gameId, setGameId] = useState('');
   const [joining, setJoining] = useState(false);
   const [preview, setPreview] = useState<any>(null);
-  const { joinGame, getGame, getWagerDisplay } = useStacksChess();
+  const { joinGame, getGame, getWagerDisplay, getTokenBalance } = useStacksChess();
+  const address = useAppStore((state) => state.address);
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+    if (address) {
+      getTokenBalance(address).then(setBalance).catch(() => setBalance(0));
+    }
+  }, [address, getTokenBalance]);
 
   useEffect(() => {
     const id = parseInt(gameId);
@@ -26,6 +34,14 @@ export default function JoinGameModal({ onClose }: Props) {
     // contract wager is at preview.wager.value or similar from cvToValue
     const wager = Number(preview.wager?.value || 0);
     const isStx = preview['is-stx']?.value || false;
+
+    // Balance check
+    const currentBalance = isStx ? 100_000_000 : balance; // Simulated 100 STX or real CHESS
+    if (wager > currentBalance) {
+      alert(`Insufficient balance to join this game.`);
+      setJoining(false);
+      return;
+    }
 
     joinGame(id, wager, isStx)
       .then(() => { setJoining(false); onClose(); })
