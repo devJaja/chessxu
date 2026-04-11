@@ -282,6 +282,10 @@ export const useStacksChess = () => {
     }
   };
 
+  const getWinProbability = (rawScore: number) => {
+    return `${(rawScore / 10).toFixed(1)}%`;
+  };
+
   const resolveGame = async (gameId: number, newStatus: number) => {
     if (!address) return;
 
