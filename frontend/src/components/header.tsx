@@ -12,7 +12,15 @@ export function Header() {
   const logout = useAppStore((s) => s.logout);
   const setAddress = useAppStore((s) => s.setAddress);
   const { elo } = usePlayerStats(address);
+  const { getTokenBalance } = useStacksChess();
+  const [chessBalance, setChessBalance] = useState<number>(0);
   const isAuthenticated = !!address;
+
+  useEffect(() => {
+    if (address) {
+      getTokenBalance(address).then(setChessBalance).catch(() => setChessBalance(0));
+    }
+  }, [address, getTokenBalance]);
 
   const handleConnect = () => {
     showConnect({
@@ -63,7 +71,7 @@ export function Header() {
                 {address!.slice(0, 6)}...{address!.slice(-4)}
               </span>
               <span className="text-xs text-indigo-400 font-bold">
-                ELO: {elo}
+                ELO: {elo} | {(chessBalance / 1000000).toFixed(2)} CHESS
               </span>
             </div>
             <button
