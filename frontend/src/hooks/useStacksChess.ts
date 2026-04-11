@@ -207,6 +207,25 @@ export const useStacksChess = () => {
     }
   };
 
+  const getPlayerElo = async (playerAddress: string) => {
+    const options = {
+      contractAddress: LEADERBOARD_ADDRESS,
+      contractName: LEADERBOARD_NAME,
+      functionName: 'get-player-elo',
+      functionArgs: [principalCV(playerAddress)],
+      network,
+      senderAddress: address || CONTRACT_ADDRESS,
+    };
+
+    try {
+      const result = await fetchCallReadOnlyFunction(options);
+      return Number(cvToValue(result));
+    } catch (e) {
+      console.error('Error fetching player ELO:', e);
+      return 1200;
+    }
+  };
+
   return { 
     address, 
     network, 
@@ -217,6 +236,7 @@ export const useStacksChess = () => {
     getGame, 
     getLastGameId,
     getTokenBalance,
-    getPlayerStats
+    getPlayerStats,
+    getPlayerElo
   };
 };
