@@ -3,6 +3,7 @@ import { Wallet, LogOut, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import useAppStore from "../zustand/store";
 import { userSession } from "../zustand/store";
+import { usePlayerStats } from "../hooks/useLeaderboard";
 
 export function Header() {
   const address = useAppStore((s) => s.address);
