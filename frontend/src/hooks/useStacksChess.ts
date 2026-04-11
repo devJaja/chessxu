@@ -264,6 +264,27 @@ export const useStacksChess = () => {
     }
   };
 
+  const resolveGame = async (gameId: number, newStatus: number) => {
+    if (!address) return;
+
+    await openContractCall({
+      contractAddress: CONTRACT_ADDRESS,
+      contractName: CONTRACT_NAME,
+      functionName: 'resolve-game',
+      functionArgs: [uintCV(gameId), uintCV(newStatus)],
+      postConditionMode: PostConditionMode.Allow,
+      network,
+      onFinish: (data) => {
+        addToast({
+          txId: data.txId,
+          status: 'success',
+          message: 'Game resolution transaction broadcasted'
+        });
+        console.log('Resolved game:', data.txId);
+      },
+    });
+  };
+
   return { 
     address, 
     network, 
@@ -277,6 +298,7 @@ export const useStacksChess = () => {
     getPlayerStats,
     getPlayerElo,
     getGlobalStats,
-    getExpectedScore
+    getExpectedScore,
+    resolveGame
   };
 };
