@@ -286,6 +286,10 @@ export const useStacksChess = () => {
     return `${(rawScore / 10).toFixed(1)}%`;
   };
 
+  const formatElo = (elo: number | null | undefined) => {
+    return elo?.toString() || '1200';
+  };
+
   const resolveGame = async (gameId: number, newStatus: number) => {
     if (!address) return;
 
