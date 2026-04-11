@@ -226,6 +226,25 @@ export const useStacksChess = () => {
     }
   };
 
+  const getGlobalStats = async () => {
+    const options = {
+      contractAddress: LEADERBOARD_ADDRESS,
+      contractName: LEADERBOARD_NAME,
+      functionName: 'get-global-stats',
+      functionArgs: [],
+      network,
+      senderAddress: address || CONTRACT_ADDRESS,
+    };
+
+    try {
+      const result = await fetchCallReadOnlyFunction(options);
+      return cvToValue(result);
+    } catch (e) {
+      console.error('Error fetching global stats:', e);
+      return null;
+    }
+  };
+
   return { 
     address, 
     network, 
@@ -237,6 +256,7 @@ export const useStacksChess = () => {
     getLastGameId,
     getTokenBalance,
     getPlayerStats,
-    getPlayerElo
+    getPlayerElo,
+    getGlobalStats
   };
 };
