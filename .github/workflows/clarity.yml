@@ -7,6 +7,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Clarinet
-        uses: hirosystems/clarinet-action@v2
-        with:
-          args: check --manifest-path stacks-contracts/Clarinet.toml
+        run: |
+          wget -q https://github.com/hirosystems/clarinet/releases/download/v3.16.0/clarinet-linux-x64.tar.gz -O clarinet.tar.gz
+          tar -xzf clarinet.tar.gz
+          sudo mv clarinet /usr/local/bin/
+          clarinet --version
+      - name: Clarinet Check
+        run: |
+          cd stacks-contracts
+          clarinet check
