@@ -3,7 +3,7 @@ import { useAppContext } from '../../../contexts/Context';
 import { setupNewGame } from '../../../reducer/actions/game';
 import { saveStakeData, getDummyBalance, resetDummyBalance } from '../../../helper/stakeStorage';
 import { winProbabilityPercent, projectEloAfterWin } from '../../../utils/eloUtils';
-import { useStacksChess } from '../../../hooks/useStacksChess';
+import { useStacksChess } from '../../../../hooks/useStacksChess';
 import useAppStore from '../../../../zustand/store';
 import './StakingModal.css';
 

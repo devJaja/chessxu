@@ -7,9 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup Clarinet
-        uses: stx-labs/setup-clarinet@v1
+        uses: hirosystems/setup-clarinet@v2
         with:
-          clarinet-version: '2.11.0'
+          clarinet-version: '3.11.0'
       - name: Clarinet Check
         run: |
           cd stacks-contracts
