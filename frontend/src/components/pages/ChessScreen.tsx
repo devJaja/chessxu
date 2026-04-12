@@ -60,7 +60,7 @@ export default function ChessScreen() {
       <div className="flex-shrink-0 bg-slate-800/50 border-b border-slate-700 px-4 py-3">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-white">Stack Chess</h1>
+            <h1 className="text-xl font-bold text-white">Chessxu</h1>
             <div className="flex items-center gap-2 mb-1">
               <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                 {currentGameMode === 'pvc' ? 'Player vs Computer' : 'Player vs Player'}
