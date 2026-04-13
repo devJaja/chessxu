@@ -27,6 +27,7 @@ function getStatusLabel(status: number | null | undefined) {
 }
 
 export default function ChessScreen() {
+  const isMiniPay = typeof window !== 'undefined' && ((window as any).ethereum?.isMiniPay || (window as any).provider?.isMiniPay);
   const navigate = useNavigate();
   const { isConnected, isConnecting, connect, disconnect } = useWalletAuth();
   const address = useAppStore((state) => state.address);
@@ -89,13 +90,15 @@ export default function ChessScreen() {
           </div>
           <div className="flex items-center gap-2">
             {!isConnected ? (
-              <button
-                className="px-3 py-1.5 rounded bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-xs transition shadow-lg shadow-emerald-500/20 disabled:opacity-50"
-                onClick={() => connect()}
-                disabled={isConnecting}
-              >
-                {isConnecting ? "Connecting..." : "Connect Wallet"}
-              </button>
+              !isMiniPay && (
+                <button
+                  className="px-3 py-1.5 rounded bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white text-xs transition shadow-lg shadow-emerald-500/20 disabled:opacity-50"
+                  onClick={() => connect()}
+                  disabled={isConnecting}
+                >
+                  {isConnecting ? "Connecting..." : "Connect Wallet"}
+                </button>
+              )
             ) : (
               <>
                 <span className="text-xs text-slate-400 mr-2">{address?.slice(0, 6)}...{address?.slice(-4)}</span>

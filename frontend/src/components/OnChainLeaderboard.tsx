@@ -74,7 +74,11 @@ export default function OnChainLeaderboard() {
           </tbody>
         </table>
       ) : (
-        <p className="onchain-lb__empty">Connect wallet to see your on-chain stats</p>
+        <p className="onchain-lb__empty">
+          {typeof window !== 'undefined' && ((window as any).ethereum?.isMiniPay || (window as any).provider?.isMiniPay)
+            ? "Initializing on-chain stats..."
+            : "Connect wallet to see your on-chain stats"}
+        </p>
       )}
     </div>
   );

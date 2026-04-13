@@ -38,7 +38,6 @@ import {
 import { celo } from 'viem/chains';
 import { CELO_CONFIG } from '../blockchainConstants';
 import { CHESSXU_ABI } from './contractAbi';
-import { celo as celoChain } from 'viem/chains';
 
 const CUSD_ADDRESS = '0x765DE816845861e75A25fCA122bb6898B8B1282a';
 
@@ -86,12 +85,13 @@ const celoService = {
    * Returns a wallet client for write operations
    */
   getWalletClient: () => {
-    if (!window.ethereum) {
+    const provider = (window as any).ethereum || (window as any).provider;
+    if (!provider) {
       throw new Error(celoService.ERROR_MESSAGES.WALLET_NOT_FOUND);
     }
     return createWalletClient({
       chain: celo,
-      transport: custom((window as any).ethereum)
+      transport: custom(provider)
     });
   },
   
@@ -99,7 +99,8 @@ const celoService = {
    * Returns common transaction options for MiniPay compatibility
    */
   getTxOptions: () => {
-    const isMiniPay = typeof window !== 'undefined' && (window as any).ethereum?.isMiniPay;
+    const provider = typeof window !== 'undefined' ? ((window as any).ethereum || (window as any).provider) : null;
+    const isMiniPay = provider?.isMiniPay;
     if (isMiniPay) {
       return {
         type: 'legacy' as const,
